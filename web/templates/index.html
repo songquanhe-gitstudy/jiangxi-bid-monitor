@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>监控大屏</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: #F2F2F7;
+            min-height: 100vh;
+        }
+        .ios-card {
+            background: #FFFFFF;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .ios-header {
+            background: #FFFFFF;
+            border-bottom: 1px solid #E5E5EA;
+        }
+        .ios-button {
+            background: #007AFF;
+            color: white;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .ios-button:hover {
+            background: #0056D6;
+        }
+        .ios-button-secondary {
+            background: #E5E5EA;
+            color: #1C1C1E;
+        }
+        .ios-button-secondary:hover {
+            background: #D1D1D6;
+        }
+        .stat-card {
+            transition: all 0.2s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .chart-container {
+            position: relative;
+            height: 280px;
+        }
+        .project-list {
+            min-height: 500px;
+        }
+        .project-card {
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        .project-card:hover {
+            background: #F2F2F7;
+            border-left-color: #007AFF;
+            cursor: pointer;
+        }
+        .type-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+        .type-zhaobiao {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+        .type-jihua {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+        .type-zhongbiao {
+            background: #FFF8E1;
+            color: #F57C00;
+        }
+        .filter-btn {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 12px;
+            transition: all 0.2s;
+            background: #F2F2F7;
+            color: #8E8E93;
+            border: none;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #007AFF;
+            color: white;
+        }
+        .pagination-btn {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: #F2F2F7;
+            color: #007AFF;
+            border: none;
+            transition: all 0.2s;
+        }
+        .pagination-btn:hover:not(:disabled) {
+            background: #E5E5EA;
+        }
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .page-indicator {
+            font-size: 0.85rem;
+            color: #8E8E93;
+        }
+        .log-item {
+            border-left: 3px solid #E5E5EA;
+            transition: all 0.2s;
+        }
+        .log-item:hover {
+            border-left-color: #007AFF;
+            background: #F2F2F7;
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        .status-success {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+        .status-extracted {
+            background: #E3F2FD;
+            color: #1565C0;
+        }
+    </style>
+</head>
+<body class="p-4">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <header class="ios-header mb-6 -mx-4 -mt-4 px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900">监控大屏</h1>
+                    <p class="text-gray-500 text-sm flex items-center gap-2">
+                        <span class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></span>
+                        实时监控中 · 最后更新: <span id="last-update">--</span>
+                    </p>
+                </div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="refreshData()" class="ios-button-secondary px-4 py-2 flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    刷新
+                </button>
+                <button onclick="exportData()" class="ios-button px-4 py-2 flex items-center gap-2 text-sm">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    导出
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <!-- Total Records -->
+            <div class="ios-card stat-card p-4">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm mb-1">总记录数</p>
+                        <h2 class="text-2xl font-bold text-gray-900" id="total-records">--</h2>
+                    </div>
+                    <div class="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today New -->
+            <div class="ios-card stat-card p-4">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm mb-1">今日新增</p>
+                        <h2 class="text-2xl font-bold text-green-600" id="today-new">--</h2>
+                    </div>
+                    <div class="w-10 h-10 bg-green-50 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-green-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6v6m0 0v6m0-6h6m-6 0H6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- This Week -->
+            <div class="ios-card stat-card p-4">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm mb-1">本周新增</p>
+                        <h2 class="text-2xl font-bold text-blue-600" id="week-new">--</h2>
+                    </div>
+                    <div class="w-10 h-10 bg-indigo-50 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-indigo-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- This Month -->
+            <div class="ios-card stat-card p-4">
+                <div class="flex items-start justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm mb-1">本月新增</p>
+                        <h2 class="text-2xl font-bold text-purple-600" id="month-new">--</h2>
+                    </div>
+                    <div class="w-10 h-10 bg-purple-50 rounded-xl flex items-center justify-center">
+                        <svg class="w-5 h-5 text-purple-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
+            <!-- Type Distribution Chart -->
+            <div class="ios-card p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 2v20M2 12h20"/>
+                        </svg>
+                        信息类型分布
+                    </h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Daily Trend Chart -->
+            <div class="ios-card p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="3 17 9 11 13 15 21 7"/>
+                            <polyline points="3 12 9 6 13 10 21 2"/>
+                        </svg>
+                        近7天趋势
+                    </h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Row - Swapped: Projects now on left (span 2), Logs on right (span 1) -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Recent Projects (Now on left, takes 2 columns) -->
+            <div class="ios-card p-5 lg:col-span-2">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                        最近7天项目
+                    </h3>
+                    <div class="flex gap-2">
+                        <button onclick="filterType('all')" class="filter-btn active" data-type="all">全部</button>
+                        <button onclick="filterType('招标计划')" class="filter-btn" data-type="招标计划">招标计划</button>
+                        <button onclick="filterType('招标公告')" class="filter-btn" data-type="招标公告">招标公告</button>
+                        <button onclick="filterType('中标候选人公示')" class="filter-btn" data-type="中标候选人公示">中标候选人公示</button>
+                    </div>
+                </div>
+                <div class="project-list" id="recent-projects">
+                    <!-- Projects will be populated here -->
+                </div>
+                <!-- Pagination -->
+                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                    <button onclick="prevPage()" class="pagination-btn" id="prev-btn">上一页</button>
+                    <span class="page-indicator" id="page-indicator">第 1 页 / 共 1 页</span>
+                    <button onclick="nextPage()" class="pagination-btn" id="next-btn">下一页</button>
+                </div>
+            </div>
+
+            <!-- Scheduler Logs (Now on right, takes 1 column) -->
+            <div class="ios-card p-5 lg:col-span-1">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-gray-800 flex items-center gap-2">
+                        <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        调度日志
+                    </h3>
+                    <span class="text-xs text-gray-400" id="log-count">最近10条</span>
+                </div>
+                <div id="scheduler-logs">
+                    <!-- Logs will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

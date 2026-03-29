@@ -1,0 +1,28 @@
+{
+    "ai": {
+        "api_url": "https://coding.dashscope.aliyuncs.com/v1/chat/completions",
+        "api_key": "sk-sp-03a867f1b0634b6b9722c35de90ef1e6",
+        "model": "qwen3.5-plus",
+        "timeout": 300,
+        "max_records_per_request": 3
+    },
+    "feishu": {
+        "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/60873c96-2f5f-4eb9-bd9a-b4772e669541",
+        "app_id": "",
+        "app_secret": "",
+        "receive_id": ""
+    },
+    "scraper": {
+        "max_records_per_type": 10,
+        "request_delay": 2,
+        "request_timeout": 30
+    },
+    "schedule": {
+        "start_hour": 8,
+        "end_hour": 23,
+        "interval_hours": 1
+    },
+    "database": {
+        "path": "data/bid_info.db"
+    }
+}
