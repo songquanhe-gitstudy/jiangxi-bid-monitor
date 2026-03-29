@@ -37,7 +37,7 @@ REQUEST_DELAY = 5  # 每次请求间隔时间（秒），避免请求过快
 # 定时任务配置
 SCHEDULE_CONFIG = {
     "start_hour": 8,   # 早上8点开始
-    "end_hour": 23,    # 晚上11点结束
+    "end_hour": 22,    # 晚上10点结束
     "interval_hours": 2,  # 每2小时执行一次
 }
 

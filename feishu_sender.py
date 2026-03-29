@@ -111,52 +111,53 @@ class FeishuSender:
             except:
                 extracted = {}
 
-            # 项目标题（加粗大字）
+            # 获取原始链接
+            orig_link = extracted.get('原始链接', '') or link
+
+            # 项目标题（加粗 + 蓝色 + 大字体）
             elements.append({
                 "tag": "div",
                 "text": {
-                    "tag": "plain_text",
-                    "content": f"{i}. 【{info_type}】{title}",
+                    "tag": "lark_md",
+                    "content": f"<font color='blue'>**{i}. 【{info_type}】{title}**</font>",
                     "text_size": "large",
-                    "text_align": "left",
-                    "text_color": "blue"
+                    "text_align": "left"
                 }
             })
 
-            # 根据类型显示字段
+            # 根据类型显示字段（大字体）
             fields = self._get_fields_for_type(info_type, extracted)
             for label, value in fields:
                 elements.append({
                     "tag": "div",
                     "text": {
-                        "tag": "plain_text",
-                        "content": f"{label}: {value}",
-                        "text_size": "normal",
+                        "tag": "lark_md",
+                        "content": f"**{label}**: {value}",
+                        "text_size": "large",
                         "text_align": "left"
                     }
                 })
 
-            # 发布日期和链接
+            # 发布日期（大字体）
             pub_date = extracted.get('发布日期', '') or (publish_time[:10] if publish_time else '无')
-            orig_link = extracted.get('原始链接', '') or link
-
             elements.append({
                 "tag": "div",
                 "text": {
-                    "tag": "plain_text",
-                    "content": f"发布日期: {pub_date if pub_date else '无'}",
-                    "text_size": "normal",
+                    "tag": "lark_md",
+                    "content": f"**发布日期**: {pub_date if pub_date else '无'}",
+                    "text_size": "large",
                     "text_align": "left"
                 }
             })
 
+            # 原始链接（可点击 + 大字体）
             if orig_link:
                 elements.append({
                     "tag": "div",
                     "text": {
-                        "tag": "plain_text",
-                        "content": f"原始链接: {orig_link}",
-                        "text_size": "normal",
+                        "tag": "lark_md",
+                        "content": f"**原始链接**: [{orig_link}]({orig_link})",
+                        "text_size": "large",
                         "text_align": "left"
                     }
                 })
@@ -220,7 +221,7 @@ class FeishuSender:
                 # 精简长字段
                 if key in ["项目概况", "招标范围", "资质要求"] and len(value) > 50:
                     value = value[:50] + "..."
-                fields.append((f"【{label}】", value))
+                fields.append((label, value))
 
         # 中标候选人特殊处理
         if info_type == "中标候选人公示":
@@ -230,7 +231,7 @@ class FeishuSender:
                     name = candidate.get("名称", "无")
                     price = candidate.get("报价", "无")
                     if name and name not in ["未提供", "无"]:
-                        fields.append((f"【第{idx}名】", f"{name} | 报价: {price}"))
+                        fields.append((f"第{idx}名", f"{name} | 报价: {price}"))
 
         return fields
 
