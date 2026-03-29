@@ -45,10 +45,19 @@ class WorkflowRunner:
         logger.info("【步骤1】抓取招标信息列表 - 开始")
         logger.info("=" * 50)
 
+        # 从配置获取每类最大抓取数
+        import json
+        try:
+            with open('config.json', 'r', encoding='utf-8') as f:
+                config = json.load(f)
+            max_records = config.get('scraper', {}).get('max_records_per_type', 10)
+        except:
+            max_records = 10
+
         total_new = 0
         for info_type in MONITOR_INFO_TYPES:
-            logger.info(f"抓取类型: {info_type}")
-            result = self.scraper.fetch_by_info_type(info_type, page_num=0, page_size=10)
+            logger.info(f"抓取类型: {info_type} (最多 {max_records} 条)")
+            result = self.scraper.fetch_by_info_type(info_type, page_num=0, page_size=max_records)
             records = result.get("records", [])
             if records:
                 new_count = self.storage.save_records(records)
@@ -60,65 +69,135 @@ class WorkflowRunner:
         return total_new
 
     def step2_fetch_details(self) -> int:
-        """步骤2: 抓取详情页"""
+        """步骤2: 抓取详情页 - 循环处理直到全部完成"""
 
         logger.info("=" * 50)
         logger.info("【步骤2】抓取详情页 - 开始")
         logger.info("=" * 50)
 
-        # 获取需要抓取详情的记录
-        records = self.storage.get_records_without_detail(limit=50)
+        total_success = 0
+        while True:
+            # 检查是否还有待抓取详情的记录
+            stats = self.storage.get_detail_stats()
+            pending = stats.get('without_detail', 0)
 
-        if not records:
-            logger.info("没有需要抓取详情的记录")
-            logger.info("-" * 50)
-            logger.info("【步骤2】抓取详情页 - 完成，无待处理记录")
-            logger.info("=" * 50)
-            return 0
+            if pending == 0:
+                break
 
-        logger.info(f"需要抓取详情: {len(records)} 条")
+            logger.info(f"待抓取详情: {pending} 条")
 
-        # 批量抓取详情
-        details = self.detail_scraper.fetch_batch(records, delay=REQUEST_DELAY)
+            # 获取需要抓取详情的记录（每批最多50条）
+            records = self.storage.get_records_without_detail(limit=50)
 
-        # 保存详情
-        import json
-        for detail in details:
-            record_id = detail.get('record_id')
-            detail_json = detail.copy()
-            del detail_json['record_id']  # 移除record_id字段
-            self.storage.update_detail(record_id, json.dumps(detail_json, ensure_ascii=False))
+            if not records:
+                break
+
+            # 批量抓取详情
+            details = self.detail_scraper.fetch_batch(records, delay=REQUEST_DELAY)
+
+            # 保存详情
+            import json
+            success_count = 0
+            for detail in details:
+                record_id = detail.get('record_id')
+                detail_json = detail.copy()
+                del detail_json['record_id']  # 移除record_id字段
+                if self.storage.update_detail(record_id, json.dumps(detail_json, ensure_ascii=False)):
+                    success_count += 1
+
+            total_success += success_count
+
+            if success_count == 0:
+                logger.warning("本批详情抓取失败，停止抓取")
+                break
 
         logger.info("-" * 50)
-        logger.info(f"【步骤2】抓取详情页 - 完成，成功 {len(details)} 条")
+        logger.info(f"【步骤2】抓取详情页 - 完成，成功 {total_success} 条")
         logger.info("=" * 50)
-        return len(details)
+        return total_success
 
-    def step3_extract_data(self, batch_size: int = 10) -> int:
-        """步骤3: AI提取数据"""
+    def step3_extract_data(self, batch_size: int = None) -> int:
+        """步骤3: AI提取数据 - 循环处理直到全部完成
+
+        Args:
+            batch_size: 每批处理的记录数，None时使用配置文件设置
+        """
 
         logger.info("=" * 50)
         logger.info("【步骤3】AI提取结构化数据 - 开始")
         logger.info("=" * 50)
 
-        success_count = self.extractor.run_extraction(batch_size)
-        logger.info("-" * 50)
-        logger.info(f"【步骤3】AI提取结构化数据 - 完成，成功 {success_count} 条")
-        logger.info("=" * 50)
-        return success_count
+        # 从配置获取批量大小
+        if batch_size is None:
+            import json
+            try:
+                with open('config.json', 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                batch_size = config.get('ai', {}).get('max_records_per_request', 10)
+            except:
+                batch_size = 10
 
-    def step4_send_to_feishu(self, batch_size: int = 10) -> int:
-        """步骤4: 发送到飞书"""
+        total_success = 0
+        while True:
+            # 检查是否还有待提取记录
+            stats = self.storage.get_extraction_stats()
+            pending = stats.get('pending_extraction', 0)
+
+            if pending == 0:
+                break
+
+            logger.info(f"待提取记录: {pending} 条")
+
+            # 执行一批提取
+            success_count = self.extractor.run_extraction(batch_size=batch_size)
+            total_success += success_count
+
+            if success_count == 0:
+                # 如果这批没有成功提取，跳出循环避免无限循环
+                logger.warning("本批提取失败，停止提取")
+                break
+
+        logger.info("-" * 50)
+        logger.info(f"【步骤3】AI提取结构化数据 - 完成，成功 {total_success} 条")
+        logger.info("=" * 50)
+        return total_success
+
+    def step4_send_to_feishu(self, batch_size: int = None) -> int:
+        """步骤4: 发送到飞书 - 循环处理直到全部完成
+
+        Args:
+            batch_size: 每批发送的记录数，None时默认10条
+        """
 
         logger.info("=" * 50)
         logger.info("【步骤4】发送提取数据到飞书 - 开始")
         logger.info("=" * 50)
 
-        sent_count = self.feishu_sender.send_batch(batch_size)
+        if batch_size is None:
+            batch_size = 10
+
+        total_sent = 0
+        while True:
+            # 检查是否还有待发送的记录
+            stats = self.storage.get_extraction_stats()
+            pending = stats.get('pending_send', 0)
+
+            if pending == 0:
+                break
+
+            logger.info(f"待发送飞书: {pending} 条")
+
+            sent_count = self.feishu_sender.send_batch(batch_size)
+            total_sent += sent_count
+
+            if sent_count == 0:
+                logger.warning("本批发送失败，停止发送")
+                break
+
         logger.info("-" * 50)
-        logger.info(f"【步骤4】发送提取数据到飞书 - 完成，发送 {sent_count} 条")
+        logger.info(f"【步骤4】发送提取数据到飞书 - 完成，发送 {total_sent} 条")
         logger.info("=" * 50)
-        return sent_count
+        return total_sent
 
     def run_full_workflow(self, skip_scrape: bool = False):
         """运行完整流程"""
@@ -135,10 +214,10 @@ class WorkflowRunner:
         self.step2_fetch_details()
 
         # 步骤3: AI提取
-        self.step3_extract_data(batch_size=10)
+        self.step3_extract_data()
 
-        # 步骤4: 发送飞书（每10条一批）
-        self.step4_send_to_feishu(batch_size=10)
+        # 步骤4: 发送飞书
+        self.step4_send_to_feishu()
 
         # 显示统计
         self.show_stats()

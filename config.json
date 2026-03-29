@@ -7,20 +7,21 @@
         "max_records_per_request": 3
     },
     "feishu": {
-        "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/60873c96-2f5f-4eb9-bd9a-b4772e669541",
+        "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/2f224b26-b03b-45e2-8735-4aa6e9d9fc0c",
         "app_id": "",
         "app_secret": "",
         "receive_id": ""
     },
     "scraper": {
-        "max_records_per_type": 10,
-        "request_delay": 2,
-        "request_timeout": 30
+        "max_records_per_type": 20,
+        "request_delay": 5,
+        "request_timeout": 60
     },
     "schedule": {
         "start_hour": 8,
         "end_hour": 23,
-        "interval_hours": 1
+        "interval_hours": 1,
+        "startup_task": true
     },
     "database": {
         "path": "data/bid_info.db"

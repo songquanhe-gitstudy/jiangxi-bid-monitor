@@ -1,80 +1,604 @@
-2026-03-29 20:55:13,535 - __main__ - INFO - 收到退出信号，停止调度器...
-2026-03-29 20:55:13,536 - apscheduler.scheduler - INFO - Scheduler has been shut down
-2026-03-29 20:55:13,536 - __main__ - INFO - 调度器已停止
-2026-03-29 20:55:29,521 - storage - INFO - 数据库初始化完成
-2026-03-29 20:55:29,521 - storage - INFO - 加载了 30 个已存在的记录ID
-2026-03-29 20:55:29,947 - extractor - INFO - 加载提示词: 招标计划
-2026-03-29 20:55:29,947 - extractor - INFO - 加载提示词: 招标公告
-2026-03-29 20:55:29,948 - extractor - INFO - 加载提示词: 中标候选人公示
-2026-03-29 20:55:29,951 - storage - INFO - 数据库初始化完成
-2026-03-29 20:55:29,951 - storage - INFO - 加载了 30 个已存在的记录ID
-2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 招标计划
-2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 招标公告
-2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 中标候选人公示
-2026-03-29 20:55:30,256 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,256 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
-2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
-2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
-2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
-2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
-2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
-2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
-2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 20:55:30,259 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
-2026-03-29 20:55:30,259 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
-2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
-2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
-2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
-2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Scheduler started
-2026-03-29 20:55:30,261 - __main__ - INFO - 调度器已启动
-2026-03-29 21:00:33,587 - __main__ - INFO - 收到退出信号，停止调度器...
-2026-03-29 21:00:33,588 - apscheduler.scheduler - INFO - Scheduler has been shut down
-2026-03-29 21:00:33,588 - __main__ - INFO - 调度器已停止
-2026-03-29 21:00:41,567 - storage - INFO - 数据库初始化完成
-2026-03-29 21:00:41,567 - storage - INFO - 加载了 30 个已存在的记录ID
-2026-03-29 21:00:41,933 - extractor - INFO - 加载提示词: 招标计划
-2026-03-29 21:00:41,934 - extractor - INFO - 加载提示词: 招标公告
-2026-03-29 21:00:41,934 - extractor - INFO - 加载提示词: 中标候选人公示
-2026-03-29 21:00:41,939 - storage - INFO - 数据库初始化完成
-2026-03-29 21:00:41,939 - storage - INFO - 加载了 30 个已存在的记录ID
-2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 招标计划
-2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 招标公告
-2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 中标候选人公示
-2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,295 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
-2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,295 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
-2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,295 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
-2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
-2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
-2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
-2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,297 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
-2026-03-29 21:00:42,297 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
-2026-03-29 21:00:42,297 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
-2026-03-29 21:00:42,297 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
-2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
-2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
-2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
-2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
-2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
-2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
-2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
-2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
-2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Scheduler started
-2026-03-29 21:00:42,299 - __main__ - INFO - 调度器已启动
+2026-03-29 23:04:51,511 - storage - INFO - 数据库初始化完成
+2026-03-29 23:04:51,511 - storage - WARNING - 加载记录ID文件失败: Expecting value: line 1 column 1 (char 0)
+2026-03-29 23:04:51,702 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:04:51,702 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:04:51,702 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:04:51,706 - storage - INFO - 数据库初始化完成
+2026-03-29 23:04:51,706 - storage - WARNING - 加载记录ID文件失败: Expecting value: line 1 column 1 (char 0)
+2026-03-29 23:04:51,903 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:04:51,904 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:04:51,904 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:04:51,904 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,904 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
+2026-03-29 23:04:51,905 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,905 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
+2026-03-29 23:04:51,905 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,905 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
+2026-03-29 23:04:51,905 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,905 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
+2026-03-29 23:04:51,905 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,905 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
+2026-03-29 23:04:51,905 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,905 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
+2026-03-29 23:04:51,906 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,906 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
+2026-03-29 23:04:51,906 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:04:51,906 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
+2026-03-29 23:04:51,906 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
+2026-03-29 23:04:51,907 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
+2026-03-29 23:04:51,907 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
+2026-03-29 23:04:51,907 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
+2026-03-29 23:04:51,907 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
+2026-03-29 23:04:51,907 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
+2026-03-29 23:04:51,908 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
+2026-03-29 23:04:51,908 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
+2026-03-29 23:04:51,908 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
+2026-03-29 23:04:51,908 - apscheduler.scheduler - INFO - Scheduler started
+2026-03-29 23:04:51,908 - __main__ - INFO - 调度器已启动
+2026-03-29 23:04:51,908 - __main__ - INFO - 执行启动时完整流程任务...
+2026-03-29 23:04:51,908 - __main__ - INFO - 开始执行监控流程 - 完整流程
+2026-03-29 23:04:51,908 - workflow - INFO - 
+============================================================
+2026-03-29 23:04:51,908 - workflow - INFO - 调度任务开始 - 2026-03-29 23:04:51
+2026-03-29 23:04:51,908 - workflow - INFO - ============================================================
+2026-03-29 23:04:51,908 - workflow - INFO - ==================================================
+2026-03-29 23:04:51,908 - workflow - INFO - 【步骤1】抓取招标信息列表 - 开始
+2026-03-29 23:04:51,908 - workflow - INFO - ==================================================
+2026-03-29 23:04:51,908 - workflow - INFO - 抓取类型: 招标计划
+2026-03-29 23:04:51,908 - scraper - INFO - 正在抓取: 招标计划, 第1页 (从第1条开始)
+2026-03-29 23:04:51,994 - scraper - INFO - 获取到 10 条记录, 总计 1196 条
+2026-03-29 23:04:51,996 - storage - WARNING - 记录已存在: 87cb335c-d411-4927-af22-f52a1b15c704
+2026-03-29 23:04:51,996 - storage - WARNING - 记录已存在: f5175d92-b0fb-4a8d-8689-94a264bb1300
+2026-03-29 23:04:51,996 - storage - WARNING - 记录已存在: e7361154-4202-4a03-97cd-6508380e75c1
+2026-03-29 23:04:51,997 - storage - INFO - 保存了 7 条新记录
+2026-03-29 23:04:51,997 - workflow - INFO - 抓取类型: 招标公告
+2026-03-29 23:04:51,997 - scraper - INFO - 正在抓取: 招标公告, 第1页 (从第1条开始)
+2026-03-29 23:04:52,062 - scraper - INFO - 获取到 10 条记录, 总计 933 条
+2026-03-29 23:04:52,063 - storage - WARNING - 记录已存在: d8243f4c-0b9d-4302-874e-61fe0db480a8
+2026-03-29 23:04:52,063 - storage - WARNING - 记录已存在: c2de56d7-33e3-4a86-bc8b-9d08a03ba8e6
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: b1a7d9b5-58de-4f82-b05a-7ad82ca9bb70
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: 9b7a8f6f-00c1-4c50-9b43-ce75a0bd77f9
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: 7f5e31b9-a42d-4e02-a843-69b9e5bbceab
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: 75722b77-5a55-4dec-8b90-e77d28ea9c73
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: 74ad06b0-15a6-4d37-aee6-c0249ebe92d7
+2026-03-29 23:04:52,064 - storage - WARNING - 记录已存在: 6fac7d1f-828c-48f0-9a5e-c6986a141310
+2026-03-29 23:04:52,065 - storage - INFO - 保存了 2 条新记录
+2026-03-29 23:04:52,065 - workflow - INFO - 抓取类型: 中标候选人公示
+2026-03-29 23:04:52,065 - scraper - INFO - 正在抓取: 中标候选人公示, 第1页 (从第1条开始)
+2026-03-29 23:04:52,124 - scraper - INFO - 获取到 10 条记录, 总计 797 条
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: ef3ea867-cd54-4b8e-83b7-dbd7fc538628
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: dfc31002-a8b5-4206-a00f-f5461f43c726
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: d24de974-cdfc-4d5d-bbc6-10a5db46fb55
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: cf7d84f3-2f78-4c86-8f1f-40f4cf67ddc9
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: c1cd3d56-c480-4ae9-8813-00f6b65b3308
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: 55f5303c-f15f-4c72-8b2e-a84850cc521f
+2026-03-29 23:04:52,125 - storage - WARNING - 记录已存在: 2c178e4e-5ffd-4d51-bb47-8583124ff916
+2026-03-29 23:04:52,126 - storage - INFO - 保存了 3 条新记录
+2026-03-29 23:04:52,126 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:04:52,126 - workflow - INFO - 【步骤1】抓取招标信息列表 - 完成，新增 12 条记录
+2026-03-29 23:04:52,126 - workflow - INFO - ==================================================
+2026-03-29 23:04:52,126 - workflow - INFO - ==================================================
+2026-03-29 23:04:52,127 - workflow - INFO - 【步骤2】抓取详情页 - 开始
+2026-03-29 23:04:52,127 - workflow - INFO - ==================================================
+2026-03-29 23:04:52,127 - workflow - INFO - 需要抓取详情: 12 条
+2026-03-29 23:04:52,127 - detail_scraper - INFO - 抓取进度: 1/12
+2026-03-29 23:04:52,313 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260328/d...
+2026-03-29 23:04:57,313 - detail_scraper - INFO - 抓取进度: 2/12
+2026-03-29 23:04:57,375 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/d...
+2026-03-29 23:05:02,379 - detail_scraper - INFO - 抓取进度: 3/12
+2026-03-29 23:05:02,414 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/9...
+2026-03-29 23:05:07,420 - detail_scraper - INFO - 抓取进度: 4/12
+2026-03-29 23:05:07,455 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/7...
+2026-03-29 23:05:12,457 - detail_scraper - INFO - 抓取进度: 5/12
+2026-03-29 23:05:12,483 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/3...
+2026-03-29 23:05:17,488 - detail_scraper - INFO - 抓取进度: 6/12
+2026-03-29 23:05:17,522 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/c...
+2026-03-29 23:05:22,527 - detail_scraper - INFO - 抓取进度: 7/12
+2026-03-29 23:05:22,658 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/7...
+2026-03-29 23:05:27,662 - detail_scraper - INFO - 抓取进度: 8/12
+2026-03-29 23:05:27,736 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260328/7...
+2026-03-29 23:05:32,739 - detail_scraper - INFO - 抓取进度: 9/12
+2026-03-29 23:05:32,772 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260328/0...
+2026-03-29 23:05:37,777 - detail_scraper - INFO - 抓取进度: 10/12
+2026-03-29 23:05:37,834 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260328/d...
+2026-03-29 23:05:42,838 - detail_scraper - INFO - 抓取进度: 11/12
+2026-03-29 23:05:42,875 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260328/6...
+2026-03-29 23:05:47,879 - detail_scraper - INFO - 抓取进度: 12/12
+2026-03-29 23:05:47,915 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/0...
+2026-03-29 23:05:47,925 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:05:47,925 - workflow - INFO - 【步骤2】抓取详情页 - 完成，成功 12 条
+2026-03-29 23:05:47,925 - workflow - INFO - ==================================================
+2026-03-29 23:05:47,925 - workflow - INFO - ==================================================
+2026-03-29 23:05:47,925 - workflow - INFO - 【步骤3】AI提取结构化数据 - 开始
+2026-03-29 23:05:47,925 - workflow - INFO - ==================================================
+2026-03-29 23:05:47,930 - extractor - INFO - 开始批量提取 10 条记录
+2026-03-29 23:05:47,930 - extractor - INFO - 批量提取 招标计划: 7 条
+2026-03-29 23:08:05,472 - extractor - INFO - 批量提取 招标公告: 2 条
+2026-03-29 23:09:40,012 - extractor - INFO - 批量提取 中标候选人公示: 1 条
+2026-03-29 23:10:18,317 - storage - INFO - 更新提取数据: d96e1d7a-442b-4ebd-aacd-5d2fbac37aa4
+2026-03-29 23:10:18,318 - storage - INFO - 更新提取数据: d7635476-fef8-4765-9303-da3f338fa88c
+2026-03-29 23:10:18,320 - storage - INFO - 更新提取数据: 9a6c9438-7b63-45e1-ac63-c5af575b1f48
+2026-03-29 23:10:18,321 - storage - INFO - 更新提取数据: 79f080d0-76ba-4e41-bf72-ab09ad9373ce
+2026-03-29 23:10:18,323 - storage - INFO - 更新提取数据: 339bc936-d4bd-4e0a-8345-c881fedb708e
+2026-03-29 23:10:18,324 - storage - INFO - 更新提取数据: c4b4cd2e-3286-439b-966d-dfe5f39fca5a
+2026-03-29 23:10:18,325 - storage - INFO - 更新提取数据: 70ddcea8-274e-4c28-89d6-1f12a2e6fbad
+2026-03-29 23:10:18,326 - storage - INFO - 更新提取数据: 705be0e6-21d8-410e-8c85-3627c99faea6
+2026-03-29 23:10:18,327 - storage - INFO - 更新提取数据: 058f0869-b43b-4c3d-849c-70ba333ea8b9
+2026-03-29 23:10:18,328 - storage - INFO - 更新提取数据: da8dcf2c-17df-4a47-9196-ee3778eb505b
+2026-03-29 23:10:18,328 - extractor - INFO - 批量提取完成，成功 10/10 条
+2026-03-29 23:10:18,328 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:10:18,328 - workflow - INFO - 【步骤3】AI提取结构化数据 - 完成，成功 10 条
+2026-03-29 23:10:18,328 - workflow - INFO - ==================================================
+2026-03-29 23:10:18,328 - workflow - INFO - ==================================================
+2026-03-29 23:10:18,328 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 开始
+2026-03-29 23:10:18,328 - workflow - INFO - ==================================================
+2026-03-29 23:10:18,972 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:10:18,974 - storage - INFO - 标记 10 条记录已发送飞书
+2026-03-29 23:10:18,974 - feishu_sender - INFO - 成功发送 10 条记录到飞书
+2026-03-29 23:10:18,974 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:10:18,974 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 完成，发送 10 条
+2026-03-29 23:10:18,974 - workflow - INFO - ==================================================
+2026-03-29 23:10:18,976 - workflow - INFO - 
+【数据统计】
+2026-03-29 23:10:18,976 - workflow - INFO -   总记录数: 30
+2026-03-29 23:10:18,976 - workflow - INFO -   今日新增: 0
+2026-03-29 23:10:18,976 - workflow - INFO -   详情已抓: 30
+2026-03-29 23:10:18,976 - workflow - INFO -   AI已提取: 28
+2026-03-29 23:10:18,977 - workflow - INFO -   已发飞书: 28
+2026-03-29 23:10:18,977 - workflow - INFO - 
+【按类型统计】
+2026-03-29 23:10:18,977 - workflow - INFO -   中标候选人公示: 10 条
+2026-03-29 23:10:18,977 - workflow - INFO -   招标公告: 10 条
+2026-03-29 23:10:18,977 - workflow - INFO -   招标计划: 10 条
+2026-03-29 23:10:18,977 - workflow - INFO - ============================================================
+2026-03-29 23:10:18,977 - workflow - INFO - 调度任务结束 - 2026-03-29 23:10:18
+2026-03-29 23:10:18,977 - workflow - INFO - ============================================================
+2026-03-29 23:10:18,977 - __main__ - INFO - 监控流程完成
+2026-03-29 23:17:11,550 - __main__ - INFO - 收到退出信号，停止调度器...
+2026-03-29 23:17:11,552 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-29 23:17:11,553 - __main__ - INFO - 调度器已停止
+2026-03-29 23:17:18,461 - storage - INFO - 数据库初始化完成
+2026-03-29 23:17:18,461 - storage - WARNING - 加载记录ID文件失败: Expecting value: line 1 column 1 (char 0)
+2026-03-29 23:17:18,642 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:17:18,643 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:17:18,643 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:17:18,648 - storage - INFO - 数据库初始化完成
+2026-03-29 23:17:18,648 - storage - WARNING - 加载记录ID文件失败: Expecting value: line 1 column 1 (char 0)
+2026-03-29 23:17:18,843 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:17:18,843 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:17:18,843 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:17:18,844 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,844 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
+2026-03-29 23:17:18,844 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,844 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
+2026-03-29 23:17:18,845 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,845 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
+2026-03-29 23:17:18,845 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,845 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
+2026-03-29 23:17:18,845 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,845 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
+2026-03-29 23:17:18,846 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,846 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
+2026-03-29 23:17:18,846 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,846 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
+2026-03-29 23:17:18,846 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:17:18,846 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
+2026-03-29 23:17:18,846 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
+2026-03-29 23:17:18,848 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
+2026-03-29 23:17:18,849 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
+2026-03-29 23:17:18,849 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
+2026-03-29 23:17:18,849 - apscheduler.scheduler - INFO - Scheduler started
+2026-03-29 23:17:18,849 - __main__ - INFO - 调度器已启动
+2026-03-29 23:17:18,849 - __main__ - INFO - 执行启动时完整流程任务...
+2026-03-29 23:17:18,849 - __main__ - INFO - 开始执行监控流程 - 完整流程
+2026-03-29 23:17:18,849 - workflow - INFO - 
+============================================================
+2026-03-29 23:17:18,849 - workflow - INFO - 调度任务开始 - 2026-03-29 23:17:18
+2026-03-29 23:17:18,849 - workflow - INFO - ============================================================
+2026-03-29 23:17:18,849 - workflow - INFO - ==================================================
+2026-03-29 23:17:18,849 - workflow - INFO - 【步骤1】抓取招标信息列表 - 开始
+2026-03-29 23:17:18,849 - workflow - INFO - ==================================================
+2026-03-29 23:17:18,849 - workflow - INFO - 抓取类型: 招标计划
+2026-03-29 23:17:18,849 - scraper - INFO - 正在抓取: 招标计划, 第1页 (从第1条开始)
+2026-03-29 23:17:18,912 - scraper - INFO - 获取到 10 条记录, 总计 1196 条
+2026-03-29 23:17:18,914 - storage - INFO - 保存了 10 条新记录
+2026-03-29 23:17:18,914 - workflow - INFO - 抓取类型: 招标公告
+2026-03-29 23:17:18,914 - scraper - INFO - 正在抓取: 招标公告, 第1页 (从第1条开始)
+2026-03-29 23:17:18,972 - scraper - INFO - 获取到 10 条记录, 总计 933 条
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: d8243f4c-0b9d-4302-874e-61fe0db480a8
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: c2de56d7-33e3-4a86-bc8b-9d08a03ba8e6
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: b1a7d9b5-58de-4f82-b05a-7ad82ca9bb70
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: 9b7a8f6f-00c1-4c50-9b43-ce75a0bd77f9
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: 7f5e31b9-a42d-4e02-a843-69b9e5bbceab
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: 75722b77-5a55-4dec-8b90-e77d28ea9c73
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: 74ad06b0-15a6-4d37-aee6-c0249ebe92d7
+2026-03-29 23:17:18,973 - storage - WARNING - 记录已存在: 6fac7d1f-828c-48f0-9a5e-c6986a141310
+2026-03-29 23:17:18,974 - storage - INFO - 保存了 2 条新记录
+2026-03-29 23:17:18,974 - workflow - INFO - 抓取类型: 中标候选人公示
+2026-03-29 23:17:18,975 - scraper - INFO - 正在抓取: 中标候选人公示, 第1页 (从第1条开始)
+2026-03-29 23:17:19,142 - scraper - INFO - 获取到 10 条记录, 总计 797 条
+2026-03-29 23:17:19,144 - storage - WARNING - 记录已存在: ef3ea867-cd54-4b8e-83b7-dbd7fc538628
+2026-03-29 23:17:19,144 - storage - WARNING - 记录已存在: dfc31002-a8b5-4206-a00f-f5461f43c726
+2026-03-29 23:17:19,145 - storage - WARNING - 记录已存在: d24de974-cdfc-4d5d-bbc6-10a5db46fb55
+2026-03-29 23:17:19,145 - storage - WARNING - 记录已存在: cf7d84f3-2f78-4c86-8f1f-40f4cf67ddc9
+2026-03-29 23:17:19,145 - storage - WARNING - 记录已存在: c1cd3d56-c480-4ae9-8813-00f6b65b3308
+2026-03-29 23:17:19,145 - storage - WARNING - 记录已存在: 55f5303c-f15f-4c72-8b2e-a84850cc521f
+2026-03-29 23:17:19,146 - storage - INFO - 保存了 4 条新记录
+2026-03-29 23:17:19,146 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:17:19,146 - workflow - INFO - 【步骤1】抓取招标信息列表 - 完成，新增 16 条记录
+2026-03-29 23:17:19,146 - workflow - INFO - ==================================================
+2026-03-29 23:17:19,147 - workflow - INFO - ==================================================
+2026-03-29 23:17:19,147 - workflow - INFO - 【步骤2】抓取详情页 - 开始
+2026-03-29 23:17:19,147 - workflow - INFO - ==================================================
+2026-03-29 23:17:19,147 - workflow - INFO - 需要抓取详情: 16 条
+2026-03-29 23:17:19,147 - detail_scraper - INFO - 抓取进度: 1/16
+2026-03-29 23:17:19,513 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260328/d...
+2026-03-29 23:17:24,519 - detail_scraper - INFO - 抓取进度: 2/16
+2026-03-29 23:17:24,555 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/d...
+2026-03-29 23:17:29,557 - detail_scraper - INFO - 抓取进度: 3/16
+2026-03-29 23:17:29,622 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/9...
+2026-03-29 23:17:34,627 - detail_scraper - INFO - 抓取进度: 4/16
+2026-03-29 23:17:34,724 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/7...
+2026-03-29 23:17:39,729 - detail_scraper - INFO - 抓取进度: 5/16
+2026-03-29 23:17:39,794 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/3...
+2026-03-29 23:17:44,794 - detail_scraper - INFO - 抓取进度: 6/16
+2026-03-29 23:17:44,852 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/c...
+2026-03-29 23:17:49,857 - detail_scraper - INFO - 抓取进度: 7/16
+2026-03-29 23:17:49,904 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/7...
+2026-03-29 23:17:54,909 - detail_scraper - INFO - 抓取进度: 8/16
+2026-03-29 23:17:54,973 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/8...
+2026-03-29 23:17:59,975 - detail_scraper - INFO - 抓取进度: 9/16
+2026-03-29 23:18:00,023 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/f...
+2026-03-29 23:18:05,023 - detail_scraper - INFO - 抓取进度: 10/16
+2026-03-29 23:18:05,082 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/e...
+2026-03-29 23:18:10,084 - detail_scraper - INFO - 抓取进度: 11/16
+2026-03-29 23:18:10,225 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260328/7...
+2026-03-29 23:18:15,230 - detail_scraper - INFO - 抓取进度: 12/16
+2026-03-29 23:18:15,284 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260328/0...
+2026-03-29 23:18:20,285 - detail_scraper - INFO - 抓取进度: 13/16
+2026-03-29 23:18:20,376 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260328/d...
+2026-03-29 23:18:25,381 - detail_scraper - INFO - 抓取进度: 14/16
+2026-03-29 23:18:25,487 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260328/6...
+2026-03-29 23:18:30,491 - detail_scraper - INFO - 抓取进度: 15/16
+2026-03-29 23:18:30,594 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/2...
+2026-03-29 23:18:35,598 - detail_scraper - INFO - 抓取进度: 16/16
+2026-03-29 23:18:35,716 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/0...
+2026-03-29 23:18:35,732 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:18:35,732 - workflow - INFO - 【步骤2】抓取详情页 - 完成，成功 16 条
+2026-03-29 23:18:35,732 - workflow - INFO - ==================================================
+2026-03-29 23:18:35,732 - workflow - INFO - ==================================================
+2026-03-29 23:18:35,732 - workflow - INFO - 【步骤3】AI提取结构化数据 - 开始
+2026-03-29 23:18:35,732 - workflow - INFO - ==================================================
+2026-03-29 23:18:35,733 - workflow - INFO - 待提取记录: 16 条
+2026-03-29 23:18:35,733 - extractor - INFO - 开始批量提取 10 条记录
+2026-03-29 23:18:35,733 - extractor - INFO - 批量提取 招标计划: 10 条
+2026-03-29 23:20:54,846 - storage - INFO - 更新提取数据: d96e1d7a-442b-4ebd-aacd-5d2fbac37aa4
+2026-03-29 23:20:54,848 - storage - INFO - 更新提取数据: d7635476-fef8-4765-9303-da3f338fa88c
+2026-03-29 23:20:54,849 - storage - INFO - 更新提取数据: 9a6c9438-7b63-45e1-ac63-c5af575b1f48
+2026-03-29 23:20:54,850 - storage - INFO - 更新提取数据: 79f080d0-76ba-4e41-bf72-ab09ad9373ce
+2026-03-29 23:20:54,852 - storage - INFO - 更新提取数据: 339bc936-d4bd-4e0a-8345-c881fedb708e
+2026-03-29 23:20:54,853 - storage - INFO - 更新提取数据: c4b4cd2e-3286-439b-966d-dfe5f39fca5a
+2026-03-29 23:20:54,854 - storage - INFO - 更新提取数据: 70ddcea8-274e-4c28-89d6-1f12a2e6fbad
+2026-03-29 23:20:54,856 - storage - INFO - 更新提取数据: 87cb335c-d411-4927-af22-f52a1b15c704
+2026-03-29 23:20:54,856 - storage - INFO - 更新提取数据: f5175d92-b0fb-4a8d-8689-94a264bb1300
+2026-03-29 23:20:54,857 - storage - INFO - 更新提取数据: e7361154-4202-4a03-97cd-6508380e75c1
+2026-03-29 23:20:54,857 - extractor - INFO - 批量提取完成，成功 10/10 条
+2026-03-29 23:20:54,858 - workflow - INFO - 待提取记录: 6 条
+2026-03-29 23:20:54,858 - extractor - INFO - 开始批量提取 6 条记录
+2026-03-29 23:20:54,858 - extractor - INFO - 批量提取 招标公告: 2 条
+2026-03-29 23:22:51,213 - extractor - INFO - 批量提取 中标候选人公示: 4 条
+2026-03-29 23:23:29,564 - storage - INFO - 更新提取数据: 705be0e6-21d8-410e-8c85-3627c99faea6
+2026-03-29 23:23:29,566 - storage - INFO - 更新提取数据: 058f0869-b43b-4c3d-849c-70ba333ea8b9
+2026-03-29 23:23:29,568 - storage - INFO - 更新提取数据: da8dcf2c-17df-4a47-9196-ee3778eb505b
+2026-03-29 23:23:29,570 - storage - INFO - 更新提取数据: 64641038-478e-4786-a4f8-4c3e7dbbd830
+2026-03-29 23:23:29,571 - storage - INFO - 更新提取数据: 2c178e4e-5ffd-4d51-bb47-8583124ff916
+2026-03-29 23:23:29,573 - storage - INFO - 更新提取数据: 060123e2-34bf-45f5-b4db-3fc809e9e2bf
+2026-03-29 23:23:29,573 - extractor - INFO - 批量提取完成，成功 6/6 条
+2026-03-29 23:23:29,573 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:23:29,574 - workflow - INFO - 【步骤3】AI提取结构化数据 - 完成，成功 16 条
+2026-03-29 23:23:29,574 - workflow - INFO - ==================================================
+2026-03-29 23:23:29,574 - workflow - INFO - ==================================================
+2026-03-29 23:23:29,574 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 开始
+2026-03-29 23:23:29,574 - workflow - INFO - ==================================================
+2026-03-29 23:23:30,162 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:23:30,164 - storage - INFO - 标记 10 条记录已发送飞书
+2026-03-29 23:23:30,164 - feishu_sender - INFO - 成功发送 10 条记录到飞书
+2026-03-29 23:23:30,164 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:23:30,164 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 完成，发送 10 条
+2026-03-29 23:23:30,164 - workflow - INFO - ==================================================
+2026-03-29 23:23:30,166 - workflow - INFO - 
+【数据统计】
+2026-03-29 23:23:30,166 - workflow - INFO -   总记录数: 30
+2026-03-29 23:23:30,166 - workflow - INFO -   今日新增: 0
+2026-03-29 23:23:30,166 - workflow - INFO -   详情已抓: 30
+2026-03-29 23:23:30,166 - workflow - INFO -   AI已提取: 30
+2026-03-29 23:23:30,166 - workflow - INFO -   已发飞书: 24
+2026-03-29 23:23:30,166 - workflow - INFO - 
+【按类型统计】
+2026-03-29 23:23:30,166 - workflow - INFO -   中标候选人公示: 10 条
+2026-03-29 23:23:30,166 - workflow - INFO -   招标公告: 10 条
+2026-03-29 23:23:30,166 - workflow - INFO -   招标计划: 10 条
+2026-03-29 23:23:30,166 - workflow - INFO - ============================================================
+2026-03-29 23:23:30,166 - workflow - INFO - 调度任务结束 - 2026-03-29 23:23:30
+2026-03-29 23:23:30,166 - workflow - INFO - ============================================================
+2026-03-29 23:23:30,166 - __main__ - INFO - 监控流程完成
+2026-03-29 23:30:11,364 - __main__ - INFO - 收到退出信号，停止调度器...
+2026-03-29 23:30:11,366 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-29 23:30:11,367 - __main__ - INFO - 调度器已停止
+2026-03-29 23:30:14,800 - storage - INFO - 数据库初始化完成
+2026-03-29 23:30:14,800 - storage - INFO - 加载了 16 个已存在的记录ID
+2026-03-29 23:30:15,014 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:30:15,015 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:30:15,015 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:30:15,020 - storage - INFO - 数据库初始化完成
+2026-03-29 23:30:15,021 - storage - INFO - 加载了 16 个已存在的记录ID
+2026-03-29 23:30:15,223 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 23:30:15,223 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 23:30:15,224 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 23:30:15,224 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,224 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
+2026-03-29 23:30:15,225 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 23:30:15,225 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
+2026-03-29 23:30:15,225 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
+2026-03-29 23:30:15,226 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
+2026-03-29 23:30:15,227 - apscheduler.scheduler - INFO - Scheduler started
+2026-03-29 23:30:15,227 - __main__ - INFO - 调度器已启动
+2026-03-29 23:30:15,227 - __main__ - INFO - 执行启动时完整流程任务...
+2026-03-29 23:30:15,227 - __main__ - INFO - 开始执行监控流程 - 完整流程
+2026-03-29 23:30:15,227 - workflow - INFO - 
+============================================================
+2026-03-29 23:30:15,227 - workflow - INFO - 调度任务开始 - 2026-03-29 23:30:15
+2026-03-29 23:30:15,227 - workflow - INFO - ============================================================
+2026-03-29 23:30:15,227 - workflow - INFO - ==================================================
+2026-03-29 23:30:15,228 - workflow - INFO - 【步骤1】抓取招标信息列表 - 开始
+2026-03-29 23:30:15,228 - workflow - INFO - ==================================================
+2026-03-29 23:30:15,228 - workflow - INFO - 抓取类型: 招标计划 (最多 20 条)
+2026-03-29 23:30:15,228 - scraper - INFO - 正在抓取: 招标计划, 第1页 (从第1条开始)
+2026-03-29 23:30:15,354 - scraper - INFO - 获取到 20 条记录, 总计 1196 条
+2026-03-29 23:30:15,357 - storage - INFO - 保存了 10 条新记录
+2026-03-29 23:30:15,357 - workflow - INFO - 抓取类型: 招标公告 (最多 20 条)
+2026-03-29 23:30:15,357 - scraper - INFO - 正在抓取: 招标公告, 第1页 (从第1条开始)
+2026-03-29 23:30:15,623 - scraper - INFO - 获取到 20 条记录, 总计 933 条
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: d8243f4c-0b9d-4302-874e-61fe0db480a8
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: c2de56d7-33e3-4a86-bc8b-9d08a03ba8e6
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: b1a7d9b5-58de-4f82-b05a-7ad82ca9bb70
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: 9b7a8f6f-00c1-4c50-9b43-ce75a0bd77f9
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: 7f5e31b9-a42d-4e02-a843-69b9e5bbceab
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: 75722b77-5a55-4dec-8b90-e77d28ea9c73
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: 74ad06b0-15a6-4d37-aee6-c0249ebe92d7
+2026-03-29 23:30:15,623 - storage - WARNING - 记录已存在: 6fac7d1f-828c-48f0-9a5e-c6986a141310
+2026-03-29 23:30:15,624 - storage - INFO - 保存了 10 条新记录
+2026-03-29 23:30:15,624 - workflow - INFO - 抓取类型: 中标候选人公示 (最多 20 条)
+2026-03-29 23:30:15,624 - scraper - INFO - 正在抓取: 中标候选人公示, 第1页 (从第1条开始)
+2026-03-29 23:30:15,803 - scraper - INFO - 获取到 20 条记录, 总计 797 条
+2026-03-29 23:30:15,803 - storage - WARNING - 记录已存在: ef3ea867-cd54-4b8e-83b7-dbd7fc538628
+2026-03-29 23:30:15,803 - storage - WARNING - 记录已存在: dfc31002-a8b5-4206-a00f-f5461f43c726
+2026-03-29 23:30:15,803 - storage - WARNING - 记录已存在: d24de974-cdfc-4d5d-bbc6-10a5db46fb55
+2026-03-29 23:30:15,804 - storage - INFO - 保存了 13 条新记录
+2026-03-29 23:30:15,804 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:30:15,805 - workflow - INFO - 【步骤1】抓取招标信息列表 - 完成，新增 33 条记录
+2026-03-29 23:30:15,805 - workflow - INFO - ==================================================
+2026-03-29 23:30:15,805 - workflow - INFO - ==================================================
+2026-03-29 23:30:15,806 - workflow - INFO - 【步骤2】抓取详情页 - 开始
+2026-03-29 23:30:15,806 - workflow - INFO - ==================================================
+2026-03-29 23:30:15,806 - workflow - INFO - 待抓取详情: 33 条
+2026-03-29 23:30:15,806 - detail_scraper - INFO - 抓取进度: 1/33
+2026-03-29 23:30:16,033 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/8...
+2026-03-29 23:30:21,038 - detail_scraper - INFO - 抓取进度: 2/33
+2026-03-29 23:30:21,104 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/5...
+2026-03-29 23:30:26,109 - detail_scraper - INFO - 抓取进度: 3/33
+2026-03-29 23:30:26,144 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/9...
+2026-03-29 23:30:31,146 - detail_scraper - INFO - 抓取进度: 4/33
+2026-03-29 23:30:31,173 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/c...
+2026-03-29 23:30:36,178 - detail_scraper - INFO - 抓取进度: 5/33
+2026-03-29 23:30:36,206 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/1...
+2026-03-29 23:30:41,208 - detail_scraper - INFO - 抓取进度: 6/33
+2026-03-29 23:30:41,244 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/4...
+2026-03-29 23:30:46,244 - detail_scraper - INFO - 抓取进度: 7/33
+2026-03-29 23:30:46,273 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/7...
+2026-03-29 23:30:51,274 - detail_scraper - INFO - 抓取进度: 8/33
+2026-03-29 23:30:51,304 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/3...
+2026-03-29 23:30:56,309 - detail_scraper - INFO - 抓取进度: 9/33
+2026-03-29 23:30:56,346 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/c...
+2026-03-29 23:31:01,349 - detail_scraper - INFO - 抓取进度: 10/33
+2026-03-29 23:31:01,384 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001006/20260327/b...
+2026-03-29 23:31:06,389 - detail_scraper - INFO - 抓取进度: 11/33
+2026-03-29 23:31:06,425 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/6...
+2026-03-29 23:31:11,427 - detail_scraper - INFO - 抓取进度: 12/33
+2026-03-29 23:31:11,456 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/6...
+2026-03-29 23:31:16,461 - detail_scraper - INFO - 抓取进度: 13/33
+2026-03-29 23:31:16,494 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/6...
+2026-03-29 23:31:21,499 - detail_scraper - INFO - 抓取进度: 14/33
+2026-03-29 23:31:21,536 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/5...
+2026-03-29 23:31:26,541 - detail_scraper - INFO - 抓取进度: 15/33
+2026-03-29 23:31:26,575 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/4...
+2026-03-29 23:31:31,578 - detail_scraper - INFO - 抓取进度: 16/33
+2026-03-29 23:31:31,619 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/4...
+2026-03-29 23:31:36,619 - detail_scraper - INFO - 抓取进度: 17/33
+2026-03-29 23:31:36,654 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/4...
+2026-03-29 23:31:41,659 - detail_scraper - INFO - 抓取进度: 18/33
+2026-03-29 23:31:41,695 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/4...
+2026-03-29 23:31:46,700 - detail_scraper - INFO - 抓取进度: 19/33
+2026-03-29 23:31:46,733 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/4...
+2026-03-29 23:31:51,738 - detail_scraper - INFO - 抓取进度: 20/33
+2026-03-29 23:31:51,766 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001001/20260327/3...
+2026-03-29 23:31:56,767 - detail_scraper - INFO - 抓取进度: 21/33
+2026-03-29 23:31:56,805 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/c...
+2026-03-29 23:32:01,807 - detail_scraper - INFO - 抓取进度: 22/33
+2026-03-29 23:32:01,846 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/c...
+2026-03-29 23:32:06,851 - detail_scraper - INFO - 抓取进度: 23/33
+2026-03-29 23:32:06,893 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260327/5...
+2026-03-29 23:32:11,898 - detail_scraper - INFO - 抓取进度: 24/33
+2026-03-29 23:32:11,937 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/c...
+2026-03-29 23:32:16,938 - detail_scraper - INFO - 抓取进度: 25/33
+2026-03-29 23:32:16,985 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/b...
+2026-03-29 23:32:21,986 - detail_scraper - INFO - 抓取进度: 26/33
+2026-03-29 23:32:22,037 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/8...
+2026-03-29 23:32:27,043 - detail_scraper - INFO - 抓取进度: 27/33
+2026-03-29 23:32:27,076 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/7...
+2026-03-29 23:32:32,079 - detail_scraper - INFO - 抓取进度: 28/33
+2026-03-29 23:32:32,115 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/6...
+2026-03-29 23:32:37,121 - detail_scraper - INFO - 抓取进度: 29/33
+2026-03-29 23:32:37,156 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/5...
+2026-03-29 23:32:42,159 - detail_scraper - INFO - 抓取进度: 30/33
+2026-03-29 23:32:42,196 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/4...
+2026-03-29 23:32:47,201 - detail_scraper - INFO - 抓取进度: 31/33
+2026-03-29 23:32:47,234 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/3...
+2026-03-29 23:32:52,240 - detail_scraper - INFO - 抓取进度: 32/33
+2026-03-29 23:32:52,285 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/0...
+2026-03-29 23:32:57,287 - detail_scraper - INFO - 抓取进度: 33/33
+2026-03-29 23:32:57,317 - detail_scraper - INFO - 成功抓取详情: https://ggzy.jiangxi.gov.cn/jyxx/002001/002001004/20260326/0...
+2026-03-29 23:32:57,339 - workflow - WARNING - 本批详情抓取失败，停止抓取
+2026-03-29 23:32:57,339 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:32:57,339 - workflow - INFO - 【步骤2】抓取详情页 - 完成，成功 0 条
+2026-03-29 23:32:57,339 - workflow - INFO - ==================================================
+2026-03-29 23:32:57,340 - workflow - INFO - ==================================================
+2026-03-29 23:32:57,340 - workflow - INFO - 【步骤3】AI提取结构化数据 - 开始
+2026-03-29 23:32:57,340 - workflow - INFO - ==================================================
+2026-03-29 23:32:57,340 - workflow - INFO - 待提取记录: 33 条
+2026-03-29 23:32:57,340 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:32:57,340 - extractor - INFO - 批量提取 招标计划: 3 条
+2026-03-29 23:34:56,583 - storage - INFO - 更新提取数据: 8f9909d1-2f3d-4c44-8fcc-6bb56960fd66
+2026-03-29 23:34:56,584 - storage - INFO - 更新提取数据: 5e9e0c2f-3104-4b15-9c17-88f6919728b5
+2026-03-29 23:34:56,585 - storage - INFO - 更新提取数据: 995a621f-5c11-465b-8bf3-5165bf8d98d8
+2026-03-29 23:34:56,585 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:34:56,585 - workflow - INFO - 待提取记录: 30 条
+2026-03-29 23:34:56,585 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:34:56,585 - extractor - INFO - 批量提取 招标计划: 3 条
+2026-03-29 23:36:33,876 - storage - INFO - 更新提取数据: ccf71a6f-cef5-4dab-98d0-b2718c1001ea
+2026-03-29 23:36:33,877 - storage - INFO - 更新提取数据: 1cac8afc-ad17-49c1-ad75-eacee49b1765
+2026-03-29 23:36:33,878 - storage - INFO - 更新提取数据: 478108b7-0dc4-45e1-a23a-2d5c149641d4
+2026-03-29 23:36:33,878 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:36:33,878 - workflow - INFO - 待提取记录: 27 条
+2026-03-29 23:36:33,879 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:36:33,879 - extractor - INFO - 批量提取 招标计划: 3 条
+2026-03-29 23:38:01,227 - storage - INFO - 更新提取数据: 7ac9b934-209f-4e56-8f9f-e2d83f28497d
+2026-03-29 23:38:01,228 - storage - INFO - 更新提取数据: 3b4cf343-7382-4acf-af0e-6a0b9034b41f
+2026-03-29 23:38:01,229 - storage - INFO - 更新提取数据: cbecdd71-3b5d-4921-9482-4714b43139f3
+2026-03-29 23:38:01,229 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:38:01,230 - workflow - INFO - 待提取记录: 24 条
+2026-03-29 23:38:01,231 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:38:01,231 - extractor - INFO - 批量提取 招标计划: 1 条
+2026-03-29 23:38:58,874 - extractor - INFO - 批量提取 招标公告: 2 条
+2026-03-29 23:40:34,586 - storage - INFO - 更新提取数据: bbd12bdd-27df-493e-8358-f64bd4e4a8f2
+2026-03-29 23:40:34,588 - storage - INFO - 更新提取数据: 6ca0e6b0-51af-48ce-a0a9-979a5c480c63
+2026-03-29 23:40:34,589 - storage - INFO - 更新提取数据: 632751fe-9e69-4d23-a586-bdf22105e1ef
+2026-03-29 23:40:34,590 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:40:34,591 - workflow - INFO - 待提取记录: 21 条
+2026-03-29 23:40:34,591 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:40:34,592 - extractor - INFO - 批量提取 招标公告: 3 条
+2026-03-29 23:42:19,850 - storage - INFO - 更新提取数据: 60624f01-f7e1-4aa9-ac01-4e8dad5c1733
+2026-03-29 23:42:19,851 - storage - INFO - 更新提取数据: 50c31a97-1a92-463c-9acd-d7bb307886aa
+2026-03-29 23:42:19,853 - storage - INFO - 更新提取数据: 4a891561-b7fa-4ee7-8f71-116dbc79ee93
+2026-03-29 23:42:19,853 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:42:19,856 - workflow - INFO - 待提取记录: 18 条
+2026-03-29 23:42:19,857 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:42:19,857 - extractor - INFO - 批量提取 招标公告: 3 条
+2026-03-29 23:44:16,827 - storage - INFO - 更新提取数据: 4951276f-4b21-40a1-9288-83cd0578d279
+2026-03-29 23:44:16,829 - storage - INFO - 更新提取数据: 47d55975-1dd4-4940-a3e1-a6e314425721
+2026-03-29 23:44:16,830 - storage - INFO - 更新提取数据: 4761fa70-5208-4e93-bcdd-edd6d7e62df4
+2026-03-29 23:44:16,830 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:44:16,833 - workflow - INFO - 待提取记录: 15 条
+2026-03-29 23:44:16,834 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:44:16,834 - extractor - INFO - 批量提取 招标公告: 2 条
+2026-03-29 23:45:55,953 - extractor - INFO - 批量提取 中标候选人公示: 1 条
+2026-03-29 23:47:01,507 - storage - INFO - 更新提取数据: 401574fc-6080-430e-ace8-713e2b2738a8
+2026-03-29 23:47:01,509 - storage - INFO - 更新提取数据: 34abfec3-3c5b-438a-9595-a63d93e6eab6
+2026-03-29 23:47:01,510 - storage - INFO - 更新提取数据: cf7d84f3-2f78-4c86-8f1f-40f4cf67ddc9
+2026-03-29 23:47:01,510 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:47:01,513 - workflow - INFO - 待提取记录: 12 条
+2026-03-29 23:47:01,514 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:47:01,514 - extractor - INFO - 批量提取 中标候选人公示: 3 条
+2026-03-29 23:48:35,337 - storage - INFO - 更新提取数据: c1cd3d56-c480-4ae9-8813-00f6b65b3308
+2026-03-29 23:48:35,339 - storage - INFO - 更新提取数据: 55f5303c-f15f-4c72-8b2e-a84850cc521f
+2026-03-29 23:48:35,340 - storage - INFO - 更新提取数据: c6392ae0-05e3-44dc-b7a5-36138128739a
+2026-03-29 23:48:35,340 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:48:35,343 - workflow - INFO - 待提取记录: 9 条
+2026-03-29 23:48:35,344 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:48:35,344 - extractor - INFO - 批量提取 中标候选人公示: 3 条
+2026-03-29 23:49:14,237 - storage - INFO - 更新提取数据: b8c180fe-316b-4a99-8ff3-f809265b2d2b
+2026-03-29 23:49:14,239 - storage - INFO - 更新提取数据: 8e737d72-7220-4e97-9c30-78c5b2b929cf
+2026-03-29 23:49:14,240 - storage - INFO - 更新提取数据: 79e11a4b-3c88-4cb0-a12d-bc5d92cd6e2d
+2026-03-29 23:49:14,240 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:49:14,241 - workflow - INFO - 待提取记录: 6 条
+2026-03-29 23:49:14,241 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:49:14,241 - extractor - INFO - 批量提取 中标候选人公示: 3 条
+2026-03-29 23:50:00,959 - storage - INFO - 更新提取数据: 61f63cf7-5b3d-4ce1-9a4e-f615c1d4b34f
+2026-03-29 23:50:00,960 - storage - INFO - 更新提取数据: 549b2211-4708-439b-a4da-d423f260bbee
+2026-03-29 23:50:00,961 - storage - INFO - 更新提取数据: 4b406ac7-cda3-4038-8c2c-ec65ca20e46f
+2026-03-29 23:50:00,962 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:50:00,965 - workflow - INFO - 待提取记录: 3 条
+2026-03-29 23:50:00,965 - extractor - INFO - 开始批量提取 3 条记录
+2026-03-29 23:50:00,965 - extractor - INFO - 批量提取 中标候选人公示: 3 条
+2026-03-29 23:51:37,968 - storage - INFO - 更新提取数据: 3d25b2c0-f405-4501-a20d-3144e2bf9b54
+2026-03-29 23:51:37,970 - storage - INFO - 更新提取数据: 0dd193bb-5b74-42db-ab16-4fd6e8096c38
+2026-03-29 23:51:37,971 - storage - INFO - 更新提取数据: 0c8bf38e-5938-4bcf-9ee2-511a80fc9d42
+2026-03-29 23:51:37,971 - extractor - INFO - 批量提取完成，成功 3/3 条
+2026-03-29 23:51:37,974 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:51:37,975 - workflow - INFO - 【步骤3】AI提取结构化数据 - 完成，成功 33 条
+2026-03-29 23:51:37,975 - workflow - INFO - ==================================================
+2026-03-29 23:51:37,975 - workflow - INFO - ==================================================
+2026-03-29 23:51:37,975 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 开始
+2026-03-29 23:51:37,975 - workflow - INFO - ==================================================
+2026-03-29 23:51:37,976 - workflow - INFO - 待发送飞书: 33 条
+2026-03-29 23:51:38,544 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:51:38,546 - storage - INFO - 标记 10 条记录已发送飞书
+2026-03-29 23:51:38,546 - feishu_sender - INFO - 成功发送 10 条记录到飞书
+2026-03-29 23:51:38,547 - workflow - INFO - 待发送飞书: 23 条
+2026-03-29 23:51:39,194 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:51:39,197 - storage - INFO - 标记 10 条记录已发送飞书
+2026-03-29 23:51:39,197 - feishu_sender - INFO - 成功发送 10 条记录到飞书
+2026-03-29 23:51:39,198 - workflow - INFO - 待发送飞书: 13 条
+2026-03-29 23:51:39,873 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:51:39,877 - storage - INFO - 标记 10 条记录已发送飞书
+2026-03-29 23:51:39,877 - feishu_sender - INFO - 成功发送 10 条记录到飞书
+2026-03-29 23:51:39,879 - workflow - INFO - 待发送飞书: 3 条
+2026-03-29 23:51:40,386 - feishu_sender - INFO - 飞书卡片消息发送成功
+2026-03-29 23:51:40,389 - storage - INFO - 标记 3 条记录已发送飞书
+2026-03-29 23:51:40,389 - feishu_sender - INFO - 成功发送 3 条记录到飞书
+2026-03-29 23:51:40,390 - workflow - INFO - --------------------------------------------------
+2026-03-29 23:51:40,390 - workflow - INFO - 【步骤4】发送提取数据到飞书 - 完成，发送 33 条
+2026-03-29 23:51:40,390 - workflow - INFO - ==================================================
+2026-03-29 23:51:40,391 - workflow - INFO - 
+【数据统计】
+2026-03-29 23:51:40,391 - workflow - INFO -   总记录数: 44
+2026-03-29 23:51:40,391 - workflow - INFO -   今日新增: 0
+2026-03-29 23:51:40,391 - workflow - INFO -   详情已抓: 44
+2026-03-29 23:51:40,392 - workflow - INFO -   AI已提取: 44
+2026-03-29 23:51:40,392 - workflow - INFO -   已发飞书: 44
+2026-03-29 23:51:40,392 - workflow - INFO - 
+【按类型统计】
+2026-03-29 23:51:40,392 - workflow - INFO -   中标候选人公示: 16 条
+2026-03-29 23:51:40,392 - workflow - INFO -   招标公告: 18 条
+2026-03-29 23:51:40,392 - workflow - INFO -   招标计划: 10 条
+2026-03-29 23:51:40,392 - workflow - INFO - ============================================================
+2026-03-29 23:51:40,392 - workflow - INFO - 调度任务结束 - 2026-03-29 23:51:40
+2026-03-29 23:51:40,392 - workflow - INFO - ============================================================
+2026-03-29 23:51:40,392 - __main__ - INFO - 监控流程完成
+2026-03-29 23:56:29,193 - __main__ - INFO - 收到退出信号，停止调度器...
+2026-03-29 23:56:29,194 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-29 23:56:29,194 - __main__ - INFO - 调度器已停止

@@ -30,7 +30,7 @@ INFO_TYPES = {
 MONITOR_INFO_TYPES = ["招标计划", "招标公告", "中标候选人公示"]
 
 # 抓取配置
-MAX_RECORDS_PER_REQUEST = 10  # 每次请求最大记录数（API可能有限制）
+MAX_RECORDS_PER_REQUEST = 20  # 每次请求最大记录数（API可能有限制）
 REQUEST_TIMEOUT = 60  # 请求超时时间（秒）
 REQUEST_DELAY = 5  # 每次请求间隔时间（秒），避免请求过快
 
@@ -39,6 +39,7 @@ SCHEDULE_CONFIG = {
     "start_hour": 8,   # 早上8点开始（首次执行，包含列表抓取）
     "end_hour": 22,    # 晚上10点结束（不再执行新任务）
     "interval_hours": 2,  # 每2小时执行一次增量任务（如 10:00, 12:00, 14:00...）
+    "startup_task": True,  # 服务启动时是否执行一次完整流程
 }
 
 # 数据库配置

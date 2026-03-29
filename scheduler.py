@@ -89,12 +89,17 @@ class BidMonitorScheduler:
 
         return True
 
-    def start(self):
-        """启动调度器"""
+    def start(self, run_startup_task: bool = None):
+        """启动调度器
+
+        Args:
+            run_startup_task: 是否在启动时执行一次完整流程任务
+                              None 时从配置文件读取
+        """
 
         if not APSCHEDULER_AVAILABLE:
             logger.error("APScheduler未安装，使用简单轮询模式")
-            self._start_simple_mode()
+            self._start_simple_mode(run_startup_task=run_startup_task)
             return
 
         if self.setup_schedule():
@@ -102,8 +107,14 @@ class BidMonitorScheduler:
             self.is_running = True
             logger.info("调度器已启动")
 
-            # 立即执行一次全量抓取（可选）
-            # self.fetch_and_notify_job(full_scan=True)
+            # 从配置读取是否执行启动任务
+            if run_startup_task is None:
+                run_startup_task = SCHEDULE_CONFIG.get("startup_task", True)
+
+            # 服务重启时执行一次完整流程任务（包含列表抓取）
+            if run_startup_task:
+                logger.info("执行启动时完整流程任务...")
+                self.run_full_workflow(skip_scrape=False)
         else:
             logger.error("调度器启动失败")
 
@@ -115,10 +126,24 @@ class BidMonitorScheduler:
             self.is_running = False
             logger.info("调度器已停止")
 
-    def _start_simple_mode(self):
-        """简单轮询模式（当APScheduler不可用时）"""
+    def _start_simple_mode(self, run_startup_task: bool = None):
+        """简单轮询模式（当APScheduler不可用时）
+
+        Args:
+            run_startup_task: 是否在启动时执行一次完整流程任务
+                              None 时从配置文件读取
+        """
 
         logger.warning("使用简单轮询模式运行")
+
+        # 从配置读取是否执行启动任务
+        if run_startup_task is None:
+            run_startup_task = SCHEDULE_CONFIG.get("startup_task", True)
+
+        # 服务启动时执行一次完整流程任务（包含列表抓取）
+        if run_startup_task:
+            logger.info("执行启动时完整流程任务...")
+            self.run_full_workflow(skip_scrape=False)
 
         while True:
             now = datetime.now()
@@ -147,8 +172,12 @@ class BidMonitorScheduler:
             time.sleep(SCHEDULE_CONFIG["interval_hours"] * 3600)
 
 
-def run_scheduler():
-    """运行调度器"""
+def run_scheduler(run_startup_task: bool = True):
+    """运行调度器
+
+    Args:
+        run_startup_task: 是否在启动时执行一次增量流程任务
+    """
 
     monitor = BidMonitorScheduler()
 
@@ -161,7 +190,7 @@ def run_scheduler():
     signal.signal(signal.SIGTERM, handle_exit)
 
     try:
-        monitor.start()
+        monitor.start(run_startup_task=run_startup_task)
 
         # 保持运行
         while monitor.is_running:
@@ -202,11 +231,13 @@ if __name__ == "__main__":
     elif args.once:
         scheduler.run_full_workflow(skip_scrape=False)
     elif args.daemon:
-        run_scheduler()
+        run_scheduler(run_startup_task=None)  # 从配置读取是否执行启动任务
     else:
         parser.print_help()
         interval = SCHEDULE_CONFIG.get("interval_hours", 1)
+        startup_task = SCHEDULE_CONFIG.get("startup_task", True)
         print(f"\n使用说明:")
         print(f"  --daemon   作为后台守护进程运行（{SCHEDULE_CONFIG['start_hour']:02d}:00-{SCHEDULE_CONFIG['end_hour']:02d}:00 每{interval}小时执行）")
         print("  --once     单次执行完整监控流程")
         print("  --test     测试模式，显示任务配置")
+        print(f"\n提示: 守护进程启动时会{'执行' if startup_task else '不执行'}一次完整流程任务（可在config.json中配置startup_task）")
