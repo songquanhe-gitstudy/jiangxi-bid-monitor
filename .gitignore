@@ -55,3 +55,7 @@ Thumbs.db
 # Web app data
 web/data/
 web/__pycache__/
+
+logs/**
+logs/workflow.log
+*.tar.gz

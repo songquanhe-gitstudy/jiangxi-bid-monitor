@@ -20,7 +20,7 @@ Each step can run independently via `workflow.py --step N`, or as a full workflo
 | Module | Purpose |
 |--------|---------|
 | `workflow.py` | Orchestrates the 4-step pipeline, main entry point |
-| `scheduler.py` | APScheduler-based daemon (8:00-23:00 hourly execution) |
+| `scheduler.py` | APScheduler-based daemon (8:00-22:00 every 2 hours execution) |
 | `scraper.py` | Fetches list data from official API |
 | `detail_scraper.py` | Scrapes detail page content |
 | `extractor.py` | Batch AI extraction (uses OpenAI-compatible API) |
@@ -36,6 +36,29 @@ Each step can run independently via `workflow.py --step N`, or as a full workflo
 3. Records only sent to Feishu once (`sent_to_feishu=0` → `sent_to_feishu=1`)
 
 ## Common Commands
+
+### Quick Start (Using start.sh)
+
+```bash
+# First time setup (checks Python version, installs dependencies, creates directories)
+./start.sh setup
+
+# Start all services (backend daemon + web dashboard)
+./start.sh start
+
+# Start only the scheduler daemon
+./start.sh daemon
+
+# Start only the web dashboard
+./start.sh dashboard
+
+# Other commands
+./start.sh once       # Run once (single execution)
+./start.sh stats      # View statistics
+./start.sh logs       # View logs
+./start.sh stop       # Stop daemon
+./start.sh status     # Check system status
+```
 
 ### Development & Testing
 
@@ -65,7 +88,7 @@ python scheduler.py --once
 ### Production
 
 ```bash
-# Start daemon (8:00-23:00 hourly)
+# Start daemon (8:00-22:00 every 2 hours)
 python scheduler.py --daemon
 ```
 
@@ -113,7 +136,8 @@ Prompts are editable files in `prompts/`:
 
 ### Feishu Message Format
 
-- Bold syntax: `**text**`
+- Use `interactive` card type with `lark_md` for rich formatting
+- Bold syntax: `**text**` (or use Unicode bold for English)
 - Each message max 10 projects
 - Header shows type distribution and count
 - Every project ends with `发布日期` and `原始链接`
@@ -173,3 +197,68 @@ Access at `http://localhost:8080` (or port 5000 if available)
 - **Charts**: Doughnut chart for type distribution, line chart for daily trend
 - **Scheduler Logs**: Real-time execution status
 - **Project List**: Filterable by type (招标计划/公告/中标公示), shows extraction/send status
+
+## Deployment
+
+### Package for Production
+
+Use the provided `package.sh` script to create a deployable archive:
+
+```bash
+# Create package (default version: current date)
+./package.sh
+
+# Create package with specific version
+./package.sh v1.0.0
+```
+
+This creates `dist/jiangxi_bid_monitor-<version>.tar.gz` containing:
+- All Python modules
+- Web dashboard files
+- Start scripts (`start.sh`, `deploy.sh`)
+- Configuration templates
+- Documentation
+
+Excluded from package:
+- `__pycache__/`, `*.pyc` (Python cache)
+- `data/*.db` (database files)
+- `logs/*.log` (log files)
+- `.git/` (version control)
+
+### Server Deployment
+
+```bash
+# 1. Upload and extract
+tar -xzf jiangxi_bid_monitor-v1.0.0.tar.gz
+cd jiangxi_bid_monitor-v1.0.0/
+
+# 2. Run deployment script
+./deploy.sh
+
+# 3. Configure
+vim config.json  # Add API keys and webhook URL
+
+# 4. Start all services
+./start.sh start
+```
+
+Access the dashboard at `http://localhost:8080`
+
+```bash
+./start.sh setup      # Initialize (install deps, create directories, config)
+./start.sh start      # Start all services (daemon + dashboard) - RECOMMENDED
+./start.sh daemon     # Start scheduler daemon only
+./start.sh dashboard  # Start web dashboard only
+./start.sh once       # Run single workflow
+./start.sh stats      # Show statistics
+./start.sh logs       # View monitor logs
+./start.sh stop       # Stop daemon
+./start.sh status     # Check system status
+```
+
+The script automatically:
+- Checks Python 3.8+ requirement
+- Installs missing dependencies from requirements.txt
+- Creates required directories (data/, logs/, prompts/)
+- Generates default config.json if missing
+- Manages daemon process (start/stop/status)

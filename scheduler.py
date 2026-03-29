@@ -57,8 +57,9 @@ class BidMonitorScheduler:
 
         start_hour = SCHEDULE_CONFIG["start_hour"]
         end_hour = SCHEDULE_CONFIG["end_hour"]
+        interval_hours = SCHEDULE_CONFIG.get("interval_hours", 1)
 
-        # 每天8点执行首次完整流程（包含列表抓取）
+        # 每天start_hour点执行首次完整流程（包含列表抓取）
         trigger_full = CronTrigger(hour=start_hour, minute=0)
         self.scheduler.add_job(
             self.run_full_workflow,
@@ -69,18 +70,22 @@ class BidMonitorScheduler:
         )
         logger.info(f"已设置完整流程任务: 每天 {start_hour}:00")
 
-        # 从9点到23点，每小时执行流程（跳过列表抓取，只处理新数据）
-        for hour in range(start_hour + 1, end_hour + 1):
-            trigger_incremental = CronTrigger(hour=hour, minute=5)
+        # 根据interval_hours设置增量流程
+        # 例如：interval_hours=2，则 10:00, 12:00, 14:00... 执行
+        next_hour = start_hour + interval_hours
+        while next_hour <= end_hour:
+            trigger_incremental = CronTrigger(hour=next_hour, minute=5)
             self.scheduler.add_job(
                 self.run_full_workflow,
                 trigger=trigger_incremental,
                 kwargs={"skip_scrape": True},  # 跳过列表抓取，处理已有数据
-                id=f"incremental_workflow_{hour}",
-                name=f"增量流程-{hour}点",
+                id=f"incremental_workflow_{next_hour}",
+                name=f"增量流程-{next_hour}点",
             )
+            logger.info(f"已设置增量流程任务: 每天 {next_hour}:05")
+            next_hour += interval_hours
 
-        logger.info(f"已设置增量流程任务: {start_hour + 1}:05 ~ {end_hour}:05")
+        logger.info(f"调度配置: 每天 {start_hour}:00 开始, 每 {interval_hours} 小时执行一次, 直到 {end_hour}:00")
 
         return True
 
@@ -200,7 +205,8 @@ if __name__ == "__main__":
         run_scheduler()
     else:
         parser.print_help()
-        print("\n使用说明:")
-        print("  --daemon   作为后台守护进程运行（8:00-23:00每小时执行）")
+        interval = SCHEDULE_CONFIG.get("interval_hours", 1)
+        print(f"\n使用说明:")
+        print(f"  --daemon   作为后台守护进程运行（{SCHEDULE_CONFIG['start_hour']:02d}:00-{SCHEDULE_CONFIG['end_hour']:02d}:00 每{interval}小时执行）")
         print("  --once     单次执行完整监控流程")
         print("  --test     测试模式，显示任务配置")

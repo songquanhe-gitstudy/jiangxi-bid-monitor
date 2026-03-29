@@ -1,0 +1,80 @@
+2026-03-29 20:55:13,535 - __main__ - INFO - 收到退出信号，停止调度器...
+2026-03-29 20:55:13,536 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-29 20:55:13,536 - __main__ - INFO - 调度器已停止
+2026-03-29 20:55:29,521 - storage - INFO - 数据库初始化完成
+2026-03-29 20:55:29,521 - storage - INFO - 加载了 30 个已存在的记录ID
+2026-03-29 20:55:29,947 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 20:55:29,947 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 20:55:29,948 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 20:55:29,951 - storage - INFO - 数据库初始化完成
+2026-03-29 20:55:29,951 - storage - INFO - 加载了 30 个已存在的记录ID
+2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 20:55:30,255 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 20:55:30,256 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,256 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
+2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
+2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
+2026-03-29 20:55:30,257 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,257 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
+2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
+2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
+2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,258 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
+2026-03-29 20:55:30,258 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 20:55:30,259 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
+2026-03-29 20:55:30,259 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
+2026-03-29 20:55:30,260 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
+2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
+2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
+2026-03-29 20:55:30,261 - apscheduler.scheduler - INFO - Scheduler started
+2026-03-29 20:55:30,261 - __main__ - INFO - 调度器已启动
+2026-03-29 21:00:33,587 - __main__ - INFO - 收到退出信号，停止调度器...
+2026-03-29 21:00:33,588 - apscheduler.scheduler - INFO - Scheduler has been shut down
+2026-03-29 21:00:33,588 - __main__ - INFO - 调度器已停止
+2026-03-29 21:00:41,567 - storage - INFO - 数据库初始化完成
+2026-03-29 21:00:41,567 - storage - INFO - 加载了 30 个已存在的记录ID
+2026-03-29 21:00:41,933 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 21:00:41,934 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 21:00:41,934 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 21:00:41,939 - storage - INFO - 数据库初始化完成
+2026-03-29 21:00:41,939 - storage - INFO - 加载了 30 个已存在的记录ID
+2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 招标计划
+2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 招标公告
+2026-03-29 21:00:42,294 - extractor - INFO - 加载提示词: 中标候选人公示
+2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,295 - __main__ - INFO - 已设置完整流程任务: 每天 8:00
+2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,295 - __main__ - INFO - 已设置增量流程任务: 每天 10:05
+2026-03-29 21:00:42,295 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,295 - __main__ - INFO - 已设置增量流程任务: 每天 12:05
+2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 14:05
+2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 16:05
+2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,296 - __main__ - INFO - 已设置增量流程任务: 每天 18:05
+2026-03-29 21:00:42,296 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,297 - __main__ - INFO - 已设置增量流程任务: 每天 20:05
+2026-03-29 21:00:42,297 - apscheduler.scheduler - INFO - Adding job tentatively -- it will be properly scheduled when the scheduler starts
+2026-03-29 21:00:42,297 - __main__ - INFO - 已设置增量流程任务: 每天 22:05
+2026-03-29 21:00:42,297 - __main__ - INFO - 调度配置: 每天 8:00 开始, 每 2 小时执行一次, 直到 22:00
+2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "每日完整流程" to job store "default"
+2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-10点" to job store "default"
+2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-12点" to job store "default"
+2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-14点" to job store "default"
+2026-03-29 21:00:42,298 - apscheduler.scheduler - INFO - Added job "增量流程-16点" to job store "default"
+2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-18点" to job store "default"
+2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-20点" to job store "default"
+2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Added job "增量流程-22点" to job store "default"
+2026-03-29 21:00:42,299 - apscheduler.scheduler - INFO - Scheduler started
+2026-03-29 21:00:42,299 - __main__ - INFO - 调度器已启动
