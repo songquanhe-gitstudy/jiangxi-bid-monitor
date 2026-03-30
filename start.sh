@@ -180,14 +180,24 @@ run_daemon() {
 
 # 停止守护进程
 stop_daemon() {
-    print_info "停止守护进程..."
+    print_info "停止所有服务..."
 
+    # 停止调度器
     PID=$(pgrep -f "scheduler.py --daemon" || true)
     if [ -n "$PID" ]; then
         kill "$PID"
-        print_success "守护进程已停止 (PID: $PID)"
+        print_success "调度器已停止 (PID: $PID)"
     else
-        print_warning "守护进程未运行"
+        print_info "调度器未运行"
+    fi
+
+    # 停止Web大屏
+    DASHBOARD_PID=$(pgrep -f "web/app.py" || true)
+    if [ -n "$DASHBOARD_PID" ]; then
+        kill "$DASHBOARD_PID" 2>/dev/null || true
+        print_success "Web监控大屏已停止 (PID: $DASHBOARD_PID)"
+    else
+        print_info "Web监控大屏未运行"
     fi
 }
 
@@ -198,6 +208,21 @@ run_once() {
     $PYTHON_CMD workflow.py --full
 }
 
+# 检查端口是否被占用（兼容不同系统）
+check_port() {
+    local port=$1
+    if command -v lsof &> /dev/null; then
+        lsof -Pi :$port -sTCP:LISTEN -t >/dev/null 2>&1
+    elif command -v netstat &> /dev/null; then
+        netstat -tuln 2>/dev/null | grep -q ":$port "
+    elif command -v ss &> /dev/null; then
+        ss -tuln 2>/dev/null | grep -q ":$port "
+    else
+        # 使用curl检测
+        curl -s "http://localhost:$port" >/dev/null 2>&1
+    fi
+}
+
 # 启动Web大屏
 run_dashboard() {
     print_info "启动Web监控大屏..."
@@ -205,11 +230,7 @@ run_dashboard() {
     cd "$PROJECT_DIR"
 
     # 检查端口是否已被占用
-    if command -v lsof &> /dev/null && lsof -Pi :8080 -sTCP:LISTEN -t >/dev/null 2>&1; then
-        print_warning "端口8080已被占用"
-        print_info "请访问: http://localhost:8080"
-        return
-    elif command -v netstat &> /dev/null && netstat -tuln 2>/dev/null | grep -q ":8080"; then
+    if check_port 8080; then
         print_warning "端口8080已被占用"
         print_info "请访问: http://localhost:8080"
         return
@@ -225,7 +246,7 @@ run_dashboard() {
     $PYTHON_CMD web/app.py
 }
 
-# 启动所有服务（后端+前端）
+# 启动所有服务（后端+前端）- 全部后台运行
 start_all() {
     print_info "启动所有服务..."
 
@@ -233,6 +254,9 @@ start_all() {
     check_python
     setup_dirs
     check_config
+
+    # 确保日志目录存在
+    mkdir -p "$PROJECT_DIR/logs"
 
     # 检查scheduler是否已在运行
     if pgrep -f "scheduler.py --daemon" > /dev/null; then
@@ -247,24 +271,43 @@ start_all() {
             print_success "调度器守护进程已启动 (PID: $PID)"
         else
             print_error "调度器启动失败"
+            cat logs/scheduler.out 2>/dev/null | tail -10
             exit 1
         fi
     fi
 
     # 检查dashboard是否已在运行
-    if lsof -Pi :8080 -sTCP:LISTEN -t >/dev/null 2>&1; then
+    if check_port 8080; then
         print_success "Web监控大屏已在运行"
-        print_info "请访问: http://localhost:8080"
     else
         print_info "启动Web监控大屏..."
-        echo
+        cd "$PROJECT_DIR"
         export PYTHONPATH="$PROJECT_DIR:$PYTHONPATH"
-        print_info "访问地址: http://localhost:8080"
-        echo "=================================="
-        echo
-        # 前台运行web服务
-        $PYTHON_CMD web/app.py
+        nohup $PYTHON_CMD web/app.py > logs/dashboard.out 2>&1 &
+        DASHBOARD_PID=$!
+        sleep 3
+
+        if check_port 8080; then
+            print_success "Web监控大屏已启动 (PID: $DASHBOARD_PID)"
+        elif kill -0 $DASHBOARD_PID 2>/dev/null; then
+            print_success "Web监控大屏正在启动中 (PID: $DASHBOARD_PID)..."
+            print_info "稍后访问: http://localhost:8080"
+        else
+            print_warning "Web监控大屏启动失败，查看日志:"
+            cat logs/dashboard.out 2>/dev/null | tail -15
+        fi
     fi
+
+    echo
+    echo "=================================="
+    print_success "所有服务已启动"
+    echo "=================================="
+    print_info "Web监控大屏: http://localhost:8080"
+    print_info "调度器日志: logs/scheduler.out"
+    print_info "大屏日志: logs/dashboard.out"
+    echo
+    print_info "使用 './start.sh stop' 停止所有服务"
+    print_info "使用 './start.sh logs' 查看日志"
 }
 
 # 查看统计
@@ -276,11 +319,37 @@ show_stats() {
 
 # 查看日志
 show_logs() {
-    LOG_FILE="$PROJECT_DIR/logs/monitor.log"
-    if [ -f "$LOG_FILE" ]; then
-        tail -f "$LOG_FILE"
+    LOG_FILE="$PROJECT_DIR/logs/workflow.log"
+    SCHEDULER_LOG="$PROJECT_DIR/logs/scheduler.out"
+    DASHBOARD_LOG="$PROJECT_DIR/logs/dashboard.out"
+
+    echo "日志文件:"
+    echo "  1. workflow.log - 工作流日志"
+    echo "  2. scheduler.out - 调度器输出"
+    echo "  3. dashboard.out - Web大屏输出"
+    echo
+
+    if [ -n "${2:-}" ]; then
+        case "$2" in
+            scheduler)
+                [ -f "$SCHEDULER_LOG" ] && tail -f "$SCHEDULER_LOG" || print_warning "日志不存在: $SCHEDULER_LOG"
+                ;;
+            dashboard)
+                [ -f "$DASHBOARD_LOG" ] && tail -f "$DASHBOARD_LOG" || print_warning "日志不存在: $DASHBOARD_LOG"
+                ;;
+            *)
+                [ -f "$LOG_FILE" ] && tail -f "$LOG_FILE" || print_warning "日志不存在: $LOG_FILE"
+                ;;
+        esac
     else
-        print_warning "日志文件不存在: $LOG_FILE"
+        # 默认显示工作流日志
+        if [ -f "$LOG_FILE" ]; then
+            tail -f "$LOG_FILE"
+        else
+            print_warning "日志文件不存在: $LOG_FILE"
+            print_info "使用 './start.sh logs scheduler' 查看调度器日志"
+            print_info "使用 './start.sh logs dashboard' 查看Web大屏日志"
+        fi
     fi
 }
 
@@ -329,6 +398,19 @@ show_status() {
     else
         print_info "守护进程: 未运行"
     fi
+
+    # 检查Web大屏状态
+    if check_port 8080; then
+        DASHBOARD_PID=$(pgrep -f "web/app.py" | head -1)
+        if [ -n "$DASHBOARD_PID" ]; then
+            print_success "Web大屏: 运行中 (PID: $DASHBOARD_PID)"
+        else
+            print_success "Web大屏: 运行中"
+        fi
+        print_info "访问地址: http://localhost:8080"
+    else
+        print_info "Web大屏: 未运行"
+    fi
 }
 
 # 帮助信息
@@ -346,6 +428,7 @@ show_help() {
     echo "  dashboard  仅启动Web监控大屏"
     echo "  stats      查看统计数据"
     echo "  logs       查看实时监控日志"
+    echo "             可选: logs scheduler, logs dashboard"
     echo "  status     查看系统状态"
     echo "  help       显示此帮助信息"
     echo

@@ -17,7 +17,7 @@ DATABASE_PATH = os.path.join(PROJECT_ROOT, 'data', 'bid_info.db')
 # 添加父目录到路径
 sys.path.insert(0, PROJECT_ROOT)
 
-from config import SCHEDULE_CONFIG
+from config import get_schedule_config
 from storage import BidStorage
 
 app = Flask(__name__,
@@ -297,11 +297,12 @@ def export_data():
 @app.route('/api/scheduler-status')
 def get_scheduler_status():
     """获取调度器状态"""
+    schedule_config = get_schedule_config()
     return jsonify({
-        'schedule_config': SCHEDULE_CONFIG,
+        'schedule_config': schedule_config,
         'is_running': True,  # 这里可以添加实际的调度器状态检查
         'next_run': '每小时执行',
-        'working_hours': f"{SCHEDULE_CONFIG['start_hour']:02d}:00 - {SCHEDULE_CONFIG['end_hour']:02d}:00"
+        'working_hours': f"{schedule_config['start_hour']:02d}:00 - {schedule_config['end_hour']:02d}:00"
     })
 
 
