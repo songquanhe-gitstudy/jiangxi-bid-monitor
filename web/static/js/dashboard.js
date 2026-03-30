@@ -75,11 +75,22 @@ function updateTypeChart(data) {
 
     const labels = Object.keys(data);
     const values = Object.values(data);
-    const colors = ['#3b82f6', '#10b981', '#f59e0b'];
+
+    // 颜色映射：招标计划-绿色，招标公告-蓝色，中标候选人公示-红色
+    const typeColors = {
+        '招标计划': '#10b981',  // 绿色
+        '招标公告': '#3b82f6',  // 蓝色
+        '中标候选人公示': '#ef4444'  // 红色
+    };
+
+    const colors = labels.map(label => typeColors[label] || '#6b7280');
 
     if (typeChart) {
         typeChart.destroy();
     }
+
+    // 注册 datalabels 插件
+    Chart.register(ChartDataLabels);
 
     typeChart = new Chart(ctx, {
         type: 'doughnut',
@@ -88,7 +99,8 @@ function updateTypeChart(data) {
             datasets: [{
                 data: values,
                 backgroundColor: colors,
-                borderWidth: 0,
+                borderWidth: 2,
+                borderColor: '#fff',
                 hoverOffset: 4
             }]
         },
@@ -96,6 +108,18 @@ function updateTypeChart(data) {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
+                datalabels: {
+                    color: '#fff',
+                    font: {
+                        weight: 'bold',
+                        size: 14
+                    },
+                    formatter: function(value, context) {
+                        return value;
+                    },
+                    anchor: 'center',
+                    align: 'center'
+                },
                 legend: {
                     position: 'bottom',
                     labels: {
@@ -175,6 +199,9 @@ function updateTrendChart(data) {
             plugins: {
                 legend: {
                     display: false
+                },
+                datalabels: {
+                    display: false
                 }
             },
             scales: {
@@ -198,12 +225,44 @@ function updateTrendChart(data) {
                         font: {
                             size: 11,
                             family: 'Noto Sans SC'
-                        }
+                        },
+                        padding: 5
                     }
                 }
+            },
+            layout: {
+                padding: {
+                    top: 20
+                }
             }
-        }
+        },
+        plugins: [ChartDataLabels]
     });
+
+    // 手动在数据点上方添加数字标签
+    const originalDraw = trendChart.draw;
+    trendChart.draw = function() {
+        originalDraw.apply(this, arguments);
+
+        const ctx = this.ctx;
+        const chart = this;
+        const dataset = chart.data.datasets[0];
+        const meta = chart.getDatasetMeta(0);
+
+        ctx.save();
+        ctx.font = 'bold 11px Noto Sans SC';
+        ctx.fillStyle = '#667eea';
+        ctx.textAlign = 'center';
+
+        meta.data.forEach((point, index) => {
+            const value = dataset.data[index];
+            if (value > 0) {
+                ctx.fillText(value, point.x, point.y - 10);
+            }
+        });
+
+        ctx.restore();
+    };
 }
 
 // Update scheduler logs
@@ -245,6 +304,71 @@ function updateSchedulerLogs(logs) {
     }).join('');
 }
 
+// 获取提取数据字段显示
+function getExtractedFields(info_type, extracted_data) {
+    if (!extracted_data) return '';
+
+    let fieldsHtml = '';
+
+    if (info_type === '招标计划') {
+        // 招标计划：建设单位，项目概况，招标方式，投资额，资金来源，预计招标时间
+        const fields = [
+            { label: '建设单位', key: '建设单位' },
+            { label: '项目概况', key: '项目概况', truncate: 30 },
+            { label: '招标方式', key: '招标方式' },
+            { label: '投资额', key: '投资额' },
+            { label: '资金来源', key: '资金来源' },
+            { label: '预计招标时间', key: '预计招标时间' }
+        ];
+        fieldsHtml = renderFields(extracted_data, fields);
+    } else if (info_type === '招标公告') {
+        // 招标公告：招标人，工程类别，项目总投资，资质要求
+        const fields = [
+            { label: '招标人', key: '招标人' },
+            { label: '工程类别', key: '工程类别' },
+            { label: '项目总投资', key: '项目总投资' },
+            { label: '资质要求', key: '资质要求', truncate: 30 }
+        ];
+        fieldsHtml = renderFields(extracted_data, fields);
+    } else if (info_type === '中标候选人公示') {
+        // 中标候选人公示：招标人，第1名，第2名，第3名
+        const fields = [
+            { label: '招标人', key: '招标人' }
+        ];
+        fieldsHtml = renderFields(extracted_data, fields);
+
+        // 中标候选人特殊处理
+        const candidates = extracted_data['中标候选人'];
+        if (candidates && Array.isArray(candidates)) {
+            candidates.forEach((candidate, idx) => {
+                const name = candidate['名称'] || '无';
+                const price = candidate['报价'] || '无';
+                if (name && name !== '无' && name !== '未提供') {
+                    fieldsHtml += `<div class="text-xs text-gray-600 mt-1"><span class="text-gray-500">第${idx + 1}名:</span> ${name} <span class="text-gray-400">| 报价: ${price}</span></div>`;
+                }
+            });
+        }
+    }
+
+    return fieldsHtml;
+}
+
+// 渲染字段列表
+function renderFields(extracted_data, fields) {
+    let html = '';
+    fields.forEach(field => {
+        let value = extracted_data[field.key] || '';
+        if (value && value !== '无' && value !== '未提供') {
+            // 截断长文本
+            if (field.truncate && value.length > field.truncate) {
+                value = value.substring(0, field.truncate) + '...';
+            }
+            html += `<div class="text-xs text-gray-600 mt-1"><span class="text-gray-500">${field.label}:</span> ${value}</div>`;
+        }
+    });
+    return html;
+}
+
 // Update recent projects
 function updateRecentProjects(projects) {
     const container = document.getElementById('recent-projects');
@@ -278,6 +402,10 @@ function updateRecentProjects(projects) {
         const typeClass = typeClasses[project.info_type] || 'type-zhaobiao';
         // 对标题进行HTML转义，防止XSS和破坏属性
         const safeTitle = project.title ? project.title.replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+
+        // 获取提取字段显示
+        const extractedFieldsHtml = getExtractedFields(project.info_type, project.extracted_data);
+
         return `
             <div class="project-card p-4 mb-3 rounded-xl border border-gray-100 hover:shadow-md cursor-pointer"
                  data-url="${project.original_url || ''}"
@@ -302,6 +430,7 @@ function updateRecentProjects(projects) {
                                 ${formatDate(project.publish_time)}
                             </span>
                         </div>
+                        ${extractedFieldsHtml}
                     </div>
                     <div class="flex flex-col items-end gap-1">
                         ${project.sent_to_feishu ?
@@ -313,7 +442,7 @@ function updateRecentProjects(projects) {
                             </span>` :
                             `<span class="text-xs text-gray-400">待发送</span>`
                         }
-                        ${project.extracted_data ?
+                        ${project.has_extracted ?
                             `<span class="text-xs text-indigo-500">已提取</span>` :
                             `<span class="text-xs text-gray-400">未提取</span>`
                         }
@@ -430,12 +559,17 @@ function exportData() {
     window.open(`${API_BASE_URL}/export`, '_blank');
 }
 
-// Utility: Format date
+// Utility: Format date with time (精确到秒)
 function formatDate(dateStr) {
     if (!dateStr) return '未知';
     const date = new Date(dateStr);
     if (isNaN(date.getTime())) return dateStr;
-    return date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hour = String(date.getHours()).padStart(2, '0');
+    const minute = String(date.getMinutes()).padStart(2, '0');
+    const second = String(date.getSeconds()).padStart(2, '0');
+    return `${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 // Utility: Format time

@@ -72,15 +72,18 @@ def get_stats():
 
 @app.route('/api/by-type')
 def get_by_type():
-    """按类型统计"""
+    """按类型统计（仅今日数据）"""
     conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
+    # 只统计今日数据
+    today = datetime.now().strftime('%Y-%m-%d')
     cursor.execute("""
         SELECT info_type, COUNT(*) as count
         FROM bid_records
+        WHERE publish_time LIKE ?
         GROUP BY info_type
-    """)
+    """, (f'{today}%',))
 
     result = {row[0]: row[1] for row in cursor.fetchall()}
     conn.close()
@@ -124,8 +127,7 @@ def get_recent_projects():
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, title, info_type, region, publish_time, sent_to_feishu, link,
-               CASE WHEN extracted_data IS NOT NULL AND extracted_data != '' THEN 1 ELSE 0 END as has_extracted
+        SELECT id, title, info_type, region, publish_time, sent_to_feishu, link, extracted_data
         FROM bid_records
         ORDER BY publish_time DESC
         LIMIT 50
@@ -133,6 +135,14 @@ def get_recent_projects():
 
     records = []
     for row in cursor.fetchall():
+        # 解析extracted_data JSON
+        extracted_json = None
+        if row['extracted_data']:
+            try:
+                extracted_json = json.loads(row['extracted_data'])
+            except:
+                extracted_json = None
+
         records.append({
             'id': row['id'],
             'title': row['title'],
@@ -140,7 +150,8 @@ def get_recent_projects():
             'region': row['region'],
             'publish_time': row['publish_time'],
             'sent_to_feishu': bool(row['sent_to_feishu']),
-            'extracted_data': bool(row['has_extracted']),
+            'extracted_data': extracted_json,
+            'has_extracted': extracted_json is not None,
             'original_url': row['link']
         })
 

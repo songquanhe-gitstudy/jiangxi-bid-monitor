@@ -21,7 +21,7 @@
         "start_hour": 8,
         "end_hour": 22,
         "interval_hours": 2,
-        "startup_task": true
+        "startup_task": false
     },
     "database": {
         "path": "data/bid_info.db"

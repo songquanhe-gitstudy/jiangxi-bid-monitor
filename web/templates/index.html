@@ -6,6 +6,7 @@
     <title>监控大屏</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -85,8 +86,8 @@
             color: #2E7D32;
         }
         .type-zhongbiao {
-            background: #FFF8E1;
-            color: #F57C00;
+            background: #FEE2E2;
+            color: #DC2626;
         }
         .filter-btn {
             font-size: 0.75rem;
@@ -252,7 +253,7 @@
                             <circle cx="12" cy="12" r="10"/>
                             <path d="M12 2v20M2 12h20"/>
                         </svg>
-                        信息类型分布
+                        今日项目分布
                     </h3>
                 </div>
                 <div class="chart-container">
