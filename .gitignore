@@ -59,3 +59,4 @@ web/__pycache__/
 logs/**
 logs/workflow.log
 *.tar.gz
+

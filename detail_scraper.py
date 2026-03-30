@@ -10,7 +10,10 @@ from typing import Dict, Optional
 from datetime import datetime
 import logging
 
-from config import REQUEST_TIMEOUT, REQUEST_DELAY
+from config import SCRAPER_CONFIG
+
+REQUEST_TIMEOUT = SCRAPER_CONFIG.get("request_timeout", 60)
+REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
 
 logger = logging.getLogger(__name__)
 

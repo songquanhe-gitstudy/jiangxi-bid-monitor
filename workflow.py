@@ -13,8 +13,10 @@ from feishu_sender import FeishuSender
 from storage import BidStorage
 from config import (
     MONITOR_INFO_TYPES,
-    REQUEST_DELAY,
+    SCRAPER_CONFIG,
 )
+
+REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
 
 # 配置日志
 logging.basicConfig(
@@ -46,13 +48,7 @@ class WorkflowRunner:
         logger.info("=" * 50)
 
         # 从配置获取每类最大抓取数
-        import json
-        try:
-            with open('config.json', 'r', encoding='utf-8') as f:
-                config = json.load(f)
-            max_records = config.get('scraper', {}).get('max_records_per_type', 10)
-        except:
-            max_records = 10
+        max_records = SCRAPER_CONFIG.get("max_records_per_type", 10)
 
         total_new = 0
         for info_type in MONITOR_INFO_TYPES:
@@ -128,14 +124,9 @@ class WorkflowRunner:
         logger.info("=" * 50)
 
         # 从配置获取批量大小
+        from config import AI_CONFIG
         if batch_size is None:
-            import json
-            try:
-                with open('config.json', 'r', encoding='utf-8') as f:
-                    config = json.load(f)
-                batch_size = config.get('ai', {}).get('max_records_per_request', 10)
-            except:
-                batch_size = 10
+            batch_size = AI_CONFIG.get("max_records_per_request", 10)
 
         total_success = 0
         while True:

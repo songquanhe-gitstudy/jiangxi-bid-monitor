@@ -10,7 +10,10 @@ from datetime import datetime
 from typing import List, Dict, Set, Optional
 import logging
 
-from config import DATABASE_PATH, RECORDS_JSON_PATH
+from config import DATABASE_CONFIG
+
+DATABASE_PATH = DATABASE_CONFIG.get("path", "data/bid_info.db")
+RECORDS_JSON_PATH = DATABASE_CONFIG.get("records_json_path", "data/records.json")
 
 logger = logging.getLogger(__name__)
 

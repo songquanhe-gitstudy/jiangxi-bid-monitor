@@ -13,8 +13,13 @@ import logging
 from config import (
     API_BASE_URL, API_ENDPOINT,
     INDUSTRY_TYPES, INFO_TYPES, MONITOR_INFO_TYPES,
-    MAX_RECORDS_PER_REQUEST, REQUEST_TIMEOUT, REQUEST_DELAY
+    SCRAPER_CONFIG,
 )
+
+# 从配置获取参数
+MAX_RECORDS_PER_REQUEST = SCRAPER_CONFIG.get("max_records_per_type", 20)
+REQUEST_TIMEOUT = SCRAPER_CONFIG.get("request_timeout", 60)
+REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
 
 logger = logging.getLogger(__name__)
 

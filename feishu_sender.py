@@ -2,33 +2,19 @@
 飞书消息发送模块 - 将提取的数据发送到飞书
 """
 
+"""
+飞书消息发送模块 - 将提取的数据发送到飞书
+"""
+
 import json
-import os
 import requests
 import logging
 from typing import Dict, List, Optional
 from datetime import datetime
 
+from config import FEISHU_CONFIG
+
 logger = logging.getLogger(__name__)
-
-# 配置文件路径
-CONFIG_FILE = "config.json"
-
-def load_config():
-    """从配置文件加载配置"""
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return {}
-
-# 加载飞书配置
-_config = load_config()
-FEISHU_CONFIG = _config.get("feishu", {
-    "webhook_url": "",
-    "app_id": "",
-    "app_secret": "",
-    "receive_id": "",
-})
 
 
 class FeishuSender:

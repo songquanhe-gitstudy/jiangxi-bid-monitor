@@ -9,36 +9,9 @@ import logging
 from typing import Dict, Optional, List
 from datetime import datetime
 
+from config import AI_CONFIG, PROMPT_FILES
+
 logger = logging.getLogger(__name__)
-
-# 配置文件路径
-CONFIG_FILE = "config.json"
-
-# 提示词文件路径映射
-PROMPT_FILES = {
-    "招标计划": "prompts/zhaobiao_jihua.txt",
-    "招标公告": "prompts/zhaobiao_gonggao.txt",
-    "中标候选人公示": "prompts/zhongbiao_houxuanren.txt",
-}
-
-
-def load_config():
-    """从配置文件加载配置"""
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return {}
-
-
-# 加载配置
-_config = load_config()
-AI_CONFIG = _config.get("ai", {
-    "api_url": "",
-    "api_key": "",
-    "model": "",
-    "timeout": 180,
-    "max_records_per_request": 10
-})
 
 
 class AIExtractor:

@@ -104,20 +104,39 @@ python query.py -x "record_id"       # View extracted data
 
 ## Configuration
 
-### Runtime Config (config.json)
+All configuration is centralized in `config.json`:
 
-Contains sensitive/runtime settings:
-- `ai.api_url`, `ai.api_key`, `ai.model`, `ai.timeout`, `ai.max_records_per_request`
-- `feishu.webhook_url`
-- `scraper.request_delay`, `scraper.max_records_per_type`
-- `schedule.start_hour`, `schedule.end_hour`, `schedule.interval_hours`
+```json
+{
+    "ai": {
+        "api_url": "...",
+        "api_key": "...",
+        "model": "qwen3.5-plus",
+        "timeout": 300,
+        "max_records_per_request": 3
+    },
+    "feishu": {
+        "webhook_url": "..."
+    },
+    "scraper": {
+        "max_records_per_type": 20,
+        "request_delay": 5,
+        "request_timeout": 60
+    },
+    "schedule": {
+        "start_hour": 8,
+        "end_hour": 23,
+        "interval_hours": 1,
+        "startup_task": true
+    },
+    "database": {
+        "path": "data/bid_info.db",
+        "records_json_path": "data/records.json"
+    }
+}
+```
 
-### Static Config (config.py)
-
-Contains platform-specific constants:
-- `INDUSTRY_TYPES`: Industry type codes (房建及市政工程 = "002001")
-- `INFO_TYPES`: Info type codes (招标计划, 招标公告, 中标候选人公示)
-- `API_BASE_URL`, `API_ENDPOINT`: Platform API endpoints
+`config.py` only contains platform-specific constants (API URLs, info type codes) and provides helper functions to load config.json.
 
 ## Critical Rules
 

@@ -19,8 +19,8 @@
     },
     "schedule": {
         "start_hour": 8,
-        "end_hour": 23,
-        "interval_hours": 1,
+        "end_hour": 22,
+        "interval_hours": 2,
         "startup_task": true
     },
     "database": {
