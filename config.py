@@ -38,6 +38,9 @@ DEFAULT_CONFIG = {
     "database": {
         "path": "data/bid_info.db",
         "records_json_path": "data/records.json"
+    },
+    "dashboard": {
+        "url": ""
     }
 }
 
@@ -104,3 +107,9 @@ def get_database_config() -> dict:
     """获取数据库配置（每次调用重新读取）"""
     config = load_config()
     return config.get("database", DEFAULT_CONFIG["database"])
+
+
+def get_dashboard_config() -> dict:
+    """获取仪表盘配置（每次调用重新读取）"""
+    config = load_config()
+    return config.get("dashboard", DEFAULT_CONFIG["dashboard"])

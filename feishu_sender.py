@@ -8,7 +8,7 @@ import logging
 from typing import Dict, List, Optional
 from datetime import datetime
 
-from config import get_feishu_config
+from config import get_feishu_config, get_dashboard_config
 
 logger = logging.getLogger(__name__)
 
@@ -54,6 +54,10 @@ class FeishuSender:
         """
         elements = []
 
+        # 获取网站地址
+        dashboard_config = get_dashboard_config()
+        dashboard_url = dashboard_config.get("url", "")
+
         # 头部标题
         elements.append({
             "tag": "div",
@@ -94,6 +98,18 @@ class FeishuSender:
                 "text_align": "left"
             }
         })
+
+        # 添加网站链接（如果配置）
+        if dashboard_url:
+            elements.append({
+                "tag": "div",
+                "text": {
+                    "tag": "lark_md",
+                    "content": f"**网站**: [{dashboard_url}]({dashboard_url})",
+                    "text_size": "normal",
+                    "text_align": "left"
+                }
+            })
 
         elements.append({"tag": "hr"})  # 分隔线
 

@@ -13,7 +13,7 @@
         "receive_id": ""
     },
     "scraper": {
-        "max_records_per_type": 20,
+        "max_records_per_type": 3,
         "request_delay": 5,
         "request_timeout": 60
     },
@@ -21,9 +21,12 @@
         "start_hour": 8,
         "end_hour": 22,
         "interval_hours": 2,
-        "startup_task": false
+        "startup_task": true
     },
     "database": {
         "path": "data/bid_info.db"
+    },
+    "dashboard": {
+        "url": "http://127.0.0.1:8080"
     }
 }
