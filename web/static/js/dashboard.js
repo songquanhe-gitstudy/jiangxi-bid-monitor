@@ -344,7 +344,10 @@ function getExtractedFields(info_type, extracted_data) {
                 const name = candidate['名称'] || '无';
                 const price = candidate['报价'] || '无';
                 if (name && name !== '无' && name !== '未提供') {
-                    fieldsHtml += `<div class="text-xs text-gray-600 mt-1"><span class="text-gray-500">第${idx + 1}名:</span> ${name} <span class="text-gray-400">| 报价: ${price}</span></div>`;
+                    fieldsHtml += `<div class="extracted-field-item">
+                        <span class="extracted-field-label">第${idx + 1}名:</span>
+                        <span class="extracted-field-value">${name} | 报价: ${price}</span>
+                    </div>`;
                 }
             });
         }
@@ -363,10 +366,13 @@ function renderFields(extracted_data, fields) {
             if (field.truncate && value.length > field.truncate) {
                 value = value.substring(0, field.truncate) + '...';
             }
-            html += `<div class="text-xs text-gray-600 mt-1"><span class="text-gray-500">${field.label}:</span> ${value}</div>`;
+            html += `<div class="extracted-field-item">
+                <span class="extracted-field-label">${field.label}:</span>
+                <span class="extracted-field-value">${value}</span>
+            </div>`;
         }
     });
-    return html;
+    return html ? html : '';
 }
 
 // Update recent projects
@@ -407,44 +413,44 @@ function updateRecentProjects(projects) {
         const extractedFieldsHtml = getExtractedFields(project.info_type, project.extracted_data);
 
         return `
-            <div class="project-card p-4 mb-3 rounded-xl border border-gray-100 hover:shadow-md cursor-pointer"
+            <div class="project-card ${typeClass} p-4 mb-4 rounded-xl border border-gray-100 cursor-pointer"
                  data-url="${project.original_url || ''}"
                  onclick="window.open(this.dataset.url || '#', '_blank')">
                 <div class="flex items-start justify-between gap-3">
                     <div class="flex-1 min-w-0">
-                        <h4 class="font-medium text-gray-800 text-sm line-clamp-2 mb-2" title="${safeTitle}">
+                        <h4 class="project-title text-sm line-clamp-2 mb-3" title="${safeTitle}">
                             ${project.title || '无标题'}
                         </h4>
-                        <div class="flex items-center gap-3 text-xs text-gray-500">
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
                             <span class="type-badge ${typeClass}">${project.info_type || '未知'}</span>
-                            <span class="flex items-center gap-1">
-                                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                            <span class="project-meta">
+                                <svg class="w-3 h-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
                                 </svg>
                                 ${project.region || '未知地区'}
                             </span>
-                            <span class="flex items-center gap-1">
-                                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
+                            <span class="project-meta">
+                                <svg class="w-3 h-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
                                 </svg>
                                 ${formatDate(project.publish_time)}
                             </span>
                         </div>
-                        ${extractedFieldsHtml}
+                        ${extractedFieldsHtml ? `<div class="extracted-fields">${extractedFieldsHtml}</div>` : ''}
                     </div>
-                    <div class="flex flex-col items-end gap-1">
+                    <div class="flex flex-col items-end gap-2">
                         ${project.sent_to_feishu ?
-                            `<span class="text-xs text-green-500 flex items-center gap-1">
+                            `<span class="project-status status-sent">
                                 <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor">
                                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                                 </svg>
                                 已通知
                             </span>` :
-                            `<span class="text-xs text-gray-400">待发送</span>`
+                            `<span class="project-status status-pending">待发送</span>`
                         }
                         ${project.has_extracted ?
-                            `<span class="text-xs text-indigo-500">已提取</span>` :
-                            `<span class="text-xs text-gray-400">未提取</span>`
+                            `<span class="project-status" style="background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%); color: #3730a3;">已提取</span>` :
+                            `<span class="project-status status-pending">未提取</span>`
                         }
                     </div>
                 </div>
