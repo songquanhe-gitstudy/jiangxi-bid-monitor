@@ -72,7 +72,19 @@ class FeishuSender:
             t = r.get('info_type', '未知')
             type_count[t] = type_count.get(t, 0) + 1
 
-        stats_text = " | ".join([f"{t}: {c}条" for t, c in type_count.items()])
+        # 类型对应的 emoji 和颜色
+        type_emoji = {
+            "招标计划": "🟢",
+            "招标公告": "🔵",
+            "中标候选人公示": "🔴"
+        }
+
+        stats_parts = []
+        for t, c in type_count.items():
+            emoji = type_emoji.get(t, "⚪")
+            stats_parts.append(f"{emoji}{t}: {c}条")
+
+        stats_text = " | ".join(stats_parts)
         elements.append({
             "tag": "div",
             "text": {
@@ -101,12 +113,19 @@ class FeishuSender:
             # 获取原始链接
             orig_link = extracted.get('原始链接', '') or link
 
-            # 项目标题（加粗 + 蓝色 + 大字体）
+            # 根据类型设置标题颜色和 emoji
+            type_style = {
+                "招标计划": {"color": "green", "emoji": "🟢"},
+                "招标公告": {"color": "blue", "emoji": "🔵"},
+                "中标候选人公示": {"color": "red", "emoji": "🔴"}
+            }.get(info_type, {"color": "blue", "emoji": "⚪"})
+
+            # 项目标题（emoji + 加粗 + 颜色 + 大字体）
             elements.append({
                 "tag": "div",
                 "text": {
                     "tag": "lark_md",
-                    "content": f"<font color='blue'>**{i}. 【{info_type}】{title}**</font>",
+                    "content": f"{type_style['emoji']} <font color='{type_style['color']}'>**{i}. 【{info_type}】{title}**</font>",
                     "text_size": "large",
                     "text_align": "left"
                 }
@@ -125,8 +144,8 @@ class FeishuSender:
                     }
                 })
 
-            # 发布日期（大字体）
-            pub_date = extracted.get('发布日期', '') or (publish_time[:10] if publish_time else '无')
+            # 发布日期（大字体，精确到秒）
+            pub_date = extracted.get('发布日期', '') or publish_time if publish_time else '无'
             elements.append({
                 "tag": "div",
                 "text": {
@@ -436,8 +455,8 @@ class FeishuSender:
                     if value and value not in ["未提供", "无"]:
                         lines.append(f"  **{key}**: {value}")
 
-            # 发布日期和原始链接
-            pub_date = extracted.get('发布日期', '') or publish_time[:10] if publish_time else '无'
+            # 发布日期和原始链接（精确到秒）
+            pub_date = extracted.get('发布日期', '') or publish_time if publish_time else '无'
             orig_link = extracted.get('原始链接', '') or link
 
             lines.append(f"  **发布日期**: {pub_date if pub_date else '无'}")

@@ -7,7 +7,7 @@
         "max_records_per_request": 5
     },
     "feishu": {
-        "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/2f224b26-b03b-45e2-8735-4aa6e9d9fc0c",
+        "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/60873c96-2f5f-4eb9-bd9a-b4772e669541",
         "app_id": "",
         "app_secret": "",
         "receive_id": ""

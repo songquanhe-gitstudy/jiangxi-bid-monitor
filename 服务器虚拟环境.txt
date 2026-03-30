@@ -9,3 +9,9 @@ source venv/bin/activate
 
 # 安装依赖
 pip install -r requirements.txt
+
+## 测试机器人
+https://open.feishu.cn/open-apis/bot/v2/hook/60873c96-2f5f-4eb9-bd9a-b4772e669541
+
+## 生产机器人
+https://open.feishu.cn/open-apis/bot/v2/hook/2f224b26-b03b-45e2-8735-4aa6e9d9fc0c

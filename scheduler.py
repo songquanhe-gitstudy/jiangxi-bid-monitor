@@ -59,30 +59,30 @@ class BidMonitorScheduler:
         end_hour = get_schedule_config()["end_hour"]
         interval_hours = get_schedule_config().get("interval_hours", 1)
 
-        # 每天start_hour点执行首次完整流程（包含列表抓取）
+        # 每天start_hour点执行首次完整流程
         trigger_full = CronTrigger(hour=start_hour, minute=0)
         self.scheduler.add_job(
             self.run_full_workflow,
             trigger=trigger_full,
             kwargs={"skip_scrape": False},
             id="full_workflow_job",
-            name="每日完整流程",
+            name="每日首次流程",
         )
-        logger.info(f"已设置完整流程任务: 每天 {start_hour}:00")
+        logger.info(f"已设置首次流程任务: 每天 {start_hour}:00")
 
-        # 根据interval_hours设置增量流程
-        # 例如：interval_hours=2，则 10:00, 12:00, 14:00... 执行
+        # 后续定时任务：每次都执行完整流程（包括列表抓取）
+        # 去重由storage模块保证，不会重复保存已存在的记录
         next_hour = start_hour + interval_hours
         while next_hour <= end_hour:
             trigger_incremental = CronTrigger(hour=next_hour, minute=5)
             self.scheduler.add_job(
                 self.run_full_workflow,
                 trigger=trigger_incremental,
-                kwargs={"skip_scrape": True},  # 跳过列表抓取，处理已有数据
-                id=f"incremental_workflow_{next_hour}",
-                name=f"增量流程-{next_hour}点",
+                kwargs={"skip_scrape": False},  # 改为不跳过，每次都抓取列表
+                id=f"workflow_{next_hour}",
+                name=f"定时流程-{next_hour}点",
             )
-            logger.info(f"已设置增量流程任务: 每天 {next_hour}:05")
+            logger.info(f"已设置定时流程任务: 每天 {next_hour}:05")
             next_hour += interval_hours
 
         logger.info(f"调度配置: 每天 {start_hour}:00 开始, 每 {interval_hours} 小时执行一次, 直到 {end_hour}:00")
@@ -164,9 +164,8 @@ class BidMonitorScheduler:
                 time.sleep(wait_seconds)
                 continue
 
-            # 执行流程
-            skip_scrape = (current_hour > get_schedule_config()["start_hour"])
-            self.run_full_workflow(skip_scrape=skip_scrape)
+            # 执行流程（每次都执行完整流程，去重由storage模块保证）
+            self.run_full_workflow(skip_scrape=False)
 
             # 等待下一次
             time.sleep(get_schedule_config()["interval_hours"] * 3600)

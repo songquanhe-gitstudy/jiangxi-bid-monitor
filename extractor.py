@@ -92,7 +92,7 @@ class AIExtractor:
                         # 在文本开头添加元信息
                         meta_info = f"项目标题: {title}"
                         if publish_time:
-                            meta_info += f"\n发布日期: {publish_time[:10] if len(publish_time) >= 10 else publish_time}"
+                            meta_info += f"\n发布日期: {publish_time}"
                         if link:
                             meta_info += f"\n原始链接: {link}"
 
@@ -118,7 +118,7 @@ class AIExtractor:
 
                         # 如果AI没有提取到发布日期和链接，使用原始数据
                         if not clean_data.get('发布日期') or clean_data.get('发布日期') == '无':
-                            clean_data['发布日期'] = type_records[i].get('publish_time', '')[:10] if type_records[i].get('publish_time') else '无'
+                            clean_data['发布日期'] = type_records[i].get('publish_time', '') if type_records[i].get('publish_time') else '无'
                         if not clean_data.get('原始链接') or clean_data.get('原始链接') == '无':
                             clean_data['原始链接'] = type_records[i].get('link', '无')
 
