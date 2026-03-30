@@ -310,7 +310,7 @@ class BidStorage:
             "last_update": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }
 
-    def update_detail(self, record_id: str, detail_json: str):
+    def update_detail(self, record_id: str, detail_json: str) -> bool:
         """更新记录的详情数据"""
 
         conn = sqlite3.connect(DATABASE_PATH)
@@ -328,6 +328,8 @@ class BidStorage:
 
         conn.commit()
         conn.close()
+        logger.info(f"更新详情: {record_id}")
+        return True
 
     def get_records_without_detail(self, limit: int = 100) -> List[Dict]:
         """获取没有详情的记录"""
