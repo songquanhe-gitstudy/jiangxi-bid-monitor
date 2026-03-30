@@ -413,15 +413,15 @@ function updateRecentProjects(projects) {
         const extractedFieldsHtml = getExtractedFields(project.info_type, project.extracted_data);
 
         return `
-            <div class="project-card ${typeClass} p-4 mb-4 rounded-xl border border-gray-100 cursor-pointer"
+            <div class="project-card ${typeClass} mb-4 rounded-xl border border-gray-100 cursor-pointer"
                  data-url="${project.original_url || ''}"
                  onclick="window.open(this.dataset.url || '#', '_blank')">
-                <div class="flex items-start justify-between gap-3">
+                <div class="flex items-start justify-between gap-3 mb-3">
                     <div class="flex-1 min-w-0">
                         <h4 class="project-title text-sm line-clamp-2 mb-3" title="${safeTitle}">
                             ${project.title || '无标题'}
                         </h4>
-                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <div class="flex flex-wrap items-center gap-2">
                             <span class="type-badge ${typeClass}">${project.info_type || '未知'}</span>
                             <span class="project-meta">
                                 <svg class="w-3 h-3 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -436,7 +436,6 @@ function updateRecentProjects(projects) {
                                 ${formatDate(project.publish_time)}
                             </span>
                         </div>
-                        ${extractedFieldsHtml ? `<div class="extracted-fields">${extractedFieldsHtml}</div>` : ''}
                     </div>
                     <div class="flex flex-col items-end gap-2">
                         ${project.sent_to_feishu ?
@@ -454,6 +453,7 @@ function updateRecentProjects(projects) {
                         }
                     </div>
                 </div>
+                ${extractedFieldsHtml ? `<div class="extracted-fields">${extractedFieldsHtml}</div>` : ''}
             </div>
         `;
     }).join('');

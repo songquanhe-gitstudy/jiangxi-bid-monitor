@@ -13,7 +13,7 @@
         "receive_id": ""
     },
     "scraper": {
-        "max_records_per_type": 3,
+        "max_records_per_type": 20,
         "request_delay": 5,
         "request_timeout": 60
     },
