@@ -10,10 +10,7 @@ from typing import Dict, Optional
 from datetime import datetime
 import logging
 
-from config import SCRAPER_CONFIG
-
-REQUEST_TIMEOUT = SCRAPER_CONFIG.get("request_timeout", 60)
-REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
+from config import get_scraper_config
 
 logger = logging.getLogger(__name__)
 
@@ -44,7 +41,8 @@ class DetailScraper:
         """
 
         try:
-            response = self.session.get(url, timeout=REQUEST_TIMEOUT)
+            request_timeout = get_scraper_config().get("request_timeout", 60)
+            response = self.session.get(url, timeout=request_timeout)
             response.encoding = 'utf-8'
             html = response.text
 
@@ -108,17 +106,21 @@ class DetailScraper:
 
         return text
 
-    def fetch_batch(self, records: list, delay: float = REQUEST_DELAY) -> list:
+    def fetch_batch(self, records: list, delay: float = None) -> list:
         """
         批量抓取详情
 
         Args:
             records: 记录列表，每条记录需要包含 id, link, info_type, title, publish_time
-            delay: 每次请求间隔时间
+            delay: 每次请求间隔时间，None时从配置读取
 
         Returns:
             抓取结果列表
         """
+
+        # 动态获取请求间隔
+        if delay is None:
+            delay = get_scraper_config().get("request_delay", 5)
 
         results = []
         total = len(records)

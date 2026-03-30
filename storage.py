@@ -10,10 +10,7 @@ from datetime import datetime
 from typing import List, Dict, Set, Optional
 import logging
 
-from config import DATABASE_CONFIG
-
-DATABASE_PATH = DATABASE_CONFIG.get("path", "data/bid_info.db")
-RECORDS_JSON_PATH = DATABASE_CONFIG.get("records_json_path", "data/records.json")
+from config import get_database_config
 
 logger = logging.getLogger(__name__)
 
@@ -22,9 +19,14 @@ class BidStorage:
     """招标信息存储管理"""
 
     def __init__(self):
+        # 动态获取数据库配置
+        db_config = get_database_config()
+        self.database_path = db_config.get("path", "data/bid_info.db")
+        self.records_json_path = db_config.get("records_json_path", "data/records.json")
+
         # 确保数据目录存在
-        os.makedirs(os.path.dirname(DATABASE_PATH), exist_ok=True)
-        os.makedirs(os.path.dirname(RECORDS_JSON_PATH), exist_ok=True)
+        os.makedirs(os.path.dirname(self.database_path), exist_ok=True)
+        os.makedirs(os.path.dirname(self.records_json_path), exist_ok=True)
 
         # 初始化数据库
         self._init_database()
@@ -34,7 +36,7 @@ class BidStorage:
     def _init_database(self):
         """初始化SQLite数据库"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -101,9 +103,9 @@ class BidStorage:
 
         self.existing_ids: Set[str] = set()
 
-        if os.path.exists(RECORDS_JSON_PATH):
+        if os.path.exists(self.records_json_path):
             try:
-                with open(RECORDS_JSON_PATH, "r", encoding="utf-8") as f:
+                with open(self.records_json_path, "r", encoding="utf-8") as f:
                     data = json.load(f)
                     self.existing_ids = set(data.get("ids", []))
                 logger.info(f"加载了 {len(self.existing_ids)} 个已存在的记录ID")
@@ -116,7 +118,7 @@ class BidStorage:
         """保存已抓取的记录ID"""
 
         try:
-            with open(RECORDS_JSON_PATH, "w", encoding="utf-8") as f:
+            with open(self.records_json_path, "w", encoding="utf-8") as f:
                 json.dump({
                     "ids": list(self.existing_ids),
                     "updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -136,7 +138,7 @@ class BidStorage:
             return 0
 
         new_count = 0
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         for record in records:
@@ -184,7 +186,7 @@ class BidStorage:
     def get_unnotified_records(self) -> List[Dict]:
         """获取未通知的记录"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -215,7 +217,7 @@ class BidStorage:
         if not record_ids:
             return
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         for record_id in record_ids:
@@ -235,7 +237,7 @@ class BidStorage:
     ) -> List[Dict]:
         """查询记录"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -270,7 +272,7 @@ class BidStorage:
     def get_statistics(self) -> Dict:
         """获取统计信息"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         # 总记录数
@@ -313,7 +315,7 @@ class BidStorage:
     def update_detail(self, record_id: str, detail_json: str) -> bool:
         """更新记录的详情数据"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -334,7 +336,7 @@ class BidStorage:
     def get_records_without_detail(self, limit: int = 100) -> List[Dict]:
         """获取没有详情的记录"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         cursor.execute("""
@@ -360,7 +362,7 @@ class BidStorage:
     def get_records_for_extraction(self, limit: int = 100) -> List[Dict]:
         """获取需要AI提取的记录（有详情但未提取）"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -380,7 +382,7 @@ class BidStorage:
         """更新记录的AI提取数据"""
 
         try:
-            conn = sqlite3.connect(DATABASE_PATH)
+            conn = sqlite3.connect(self.database_path)
             cursor = conn.cursor()
 
             cursor.execute("""
@@ -404,7 +406,7 @@ class BidStorage:
     def get_records_for_feishu(self, batch_size: int = 10) -> List[Dict]:
         """获取待发送飞书的记录（已提取未发送）"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         conn.row_factory = sqlite3.Row
         cursor = conn.cursor()
 
@@ -427,7 +429,7 @@ class BidStorage:
         if not record_ids:
             return
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         for record_id in record_ids:
@@ -440,7 +442,7 @@ class BidStorage:
     def get_extraction_stats(self) -> Dict:
         """获取AI提取统计"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         # 有详情的记录数
@@ -468,7 +470,7 @@ class BidStorage:
     def get_detail_stats(self) -> Dict:
         """获取详情抓取统计"""
 
-        conn = sqlite3.connect(DATABASE_PATH)
+        conn = sqlite3.connect(self.database_path)
         cursor = conn.cursor()
 
         # 总记录数

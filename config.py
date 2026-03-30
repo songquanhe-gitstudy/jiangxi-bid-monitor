@@ -1,5 +1,6 @@
 """
-配置加载模块 - 统一从 config.json 加载所有运行时配置
+配置加载模块 - 动态从 config.json 加载所有配置
+每次调用获取配置函数时都会重新读取文件，支持热更新
 """
 
 import json
@@ -65,52 +66,41 @@ PROMPT_FILES = {
 
 
 def load_config() -> dict:
-    """加载配置文件，如果不存在则创建默认配置"""
+    """动态加载配置文件"""
     if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-
-    # 创建默认配置文件
-    with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
-        json.dump(DEFAULT_CONFIG, f, indent=4, ensure_ascii=False)
-
+        try:
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            pass
     return DEFAULT_CONFIG
 
 
 def get_ai_config() -> dict:
-    """获取AI配置"""
+    """获取AI配置（每次调用重新读取）"""
     config = load_config()
     return config.get("ai", DEFAULT_CONFIG["ai"])
 
 
 def get_feishu_config() -> dict:
-    """获取飞书配置"""
+    """获取飞书配置（每次调用重新读取）"""
     config = load_config()
     return config.get("feishu", DEFAULT_CONFIG["feishu"])
 
 
 def get_scraper_config() -> dict:
-    """获取抓取配置"""
+    """获取抓取配置（每次调用重新读取）"""
     config = load_config()
     return config.get("scraper", DEFAULT_CONFIG["scraper"])
 
 
 def get_schedule_config() -> dict:
-    """获取调度配置"""
+    """获取调度配置（每次调用重新读取）"""
     config = load_config()
     return config.get("schedule", DEFAULT_CONFIG["schedule"])
 
 
 def get_database_config() -> dict:
-    """获取数据库配置"""
+    """获取数据库配置（每次调用重新读取）"""
     config = load_config()
     return config.get("database", DEFAULT_CONFIG["database"])
-
-
-# 预加载配置（用于模块导入时获取配置）
-_config = load_config()
-AI_CONFIG = _config.get("ai", DEFAULT_CONFIG["ai"])
-FEISHU_CONFIG = _config.get("feishu", DEFAULT_CONFIG["feishu"])
-SCRAPER_CONFIG = _config.get("scraper", DEFAULT_CONFIG["scraper"])
-SCHEDULE_CONFIG = _config.get("schedule", DEFAULT_CONFIG["schedule"])
-DATABASE_CONFIG = _config.get("database", DEFAULT_CONFIG["database"])

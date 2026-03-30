@@ -4,7 +4,7 @@
         "api_key": "sk-sp-03a867f1b0634b6b9722c35de90ef1e6",
         "model": "qwen3.5-plus",
         "timeout": 300,
-        "max_records_per_request": 3
+        "max_records_per_request": 10
     },
     "feishu": {
         "webhook_url": "https://open.feishu.cn/open-apis/bot/v2/hook/2f224b26-b03b-45e2-8735-4aa6e9d9fc0c",

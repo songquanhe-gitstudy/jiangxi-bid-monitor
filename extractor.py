@@ -9,7 +9,7 @@ import logging
 from typing import Dict, Optional, List
 from datetime import datetime
 
-from config import AI_CONFIG, PROMPT_FILES
+from config import get_ai_config, PROMPT_FILES
 
 logger = logging.getLogger(__name__)
 
@@ -19,9 +19,21 @@ class AIExtractor:
 
     def __init__(self, storage=None):
         self.storage = storage
-        self.timeout = AI_CONFIG.get("timeout", 180)
-        self.max_records = AI_CONFIG.get("max_records_per_request", 10)
         self._load_prompts()
+
+    def _get_ai_config(self) -> dict:
+        """动态获取AI配置"""
+        return get_ai_config()
+
+    @property
+    def timeout(self) -> int:
+        """动态获取超时配置"""
+        return self._get_ai_config().get("timeout", 180)
+
+    @property
+    def max_records(self) -> int:
+        """动态获取批量大小配置"""
+        return self._get_ai_config().get("max_records_per_request", 10)
 
     def _load_prompts(self):
         """加载所有提示词模板"""
@@ -130,23 +142,25 @@ class AIExtractor:
 
         prompt = prompt_template.replace("{text}", text)
 
-        if not AI_CONFIG.get("api_url") or not AI_CONFIG.get("api_key"):
+        # 动态获取AI配置
+        ai_config = self._get_ai_config()
+        if not ai_config.get("api_url") or not ai_config.get("api_key"):
             logger.warning("AI API未配置")
             return None
 
         try:
             headers = {
-                "Authorization": f"Bearer {AI_CONFIG['api_key']}",
+                "Authorization": f"Bearer {ai_config['api_key']}",
                 "Content-Type": "application/json",
             }
             data = {
-                "model": AI_CONFIG.get("model", "qwen3.5-plus"),
+                "model": ai_config.get("model", "qwen3.5-plus"),
                 "messages": [{"role": "user", "content": prompt}],
                 "temperature": 0.1,
             }
 
             response = requests.post(
-                AI_CONFIG["api_url"],
+                ai_config["api_url"],
                 headers=headers,
                 json=data,
                 timeout=self.timeout
@@ -227,8 +241,9 @@ class AIExtractor:
 
 if __name__ == "__main__":
     # 测试配置加载
+    ai_config = get_ai_config()
     print("AI配置:")
-    print(f"  API URL: {AI_CONFIG.get('api_url', '未配置')}")
-    print(f"  Model: {AI_CONFIG.get('model', '未配置')}")
-    print(f"  Timeout: {AI_CONFIG.get('timeout', 60)}秒")
-    print(f"  每批最大记录: {AI_CONFIG.get('max_records_per_request', 10)}条")
+    print(f"  API URL: {ai_config.get('api_url', '未配置')}")
+    print(f"  Model: {ai_config.get('model', '未配置')}")
+    print(f"  Timeout: {ai_config.get('timeout', 60)}秒")
+    print(f"  每批最大记录: {ai_config.get('max_records_per_request', 10)}条")

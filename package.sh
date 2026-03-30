@@ -76,38 +76,8 @@ cp "${PROJECT_DIR}/requirements.txt" "$PACKAGE_DIR/"
 cp "${PROJECT_DIR}/README.md" "$PACKAGE_DIR/"
 cp "${PROJECT_DIR}/CLAUDE.md" "$PACKAGE_DIR/"
 
-# 配置文件（使用示例配置）
-if [ -f "${PROJECT_DIR}/config.json.example" ]; then
-    cp "${PROJECT_DIR}/config.json.example" "${PACKAGE_DIR}/config.json"
-else
-    # 创建默认配置
-    cat > "${PACKAGE_DIR}/config.json" << 'EOF'
-{
-  "ai": {
-    "api_url": "",
-    "api_key": "",
-    "model": "gpt-3.5-turbo",
-    "timeout": 60,
-    "max_records_per_request": 5
-  },
-  "feishu": {
-    "webhook_url": "",
-    "app_id": "",
-    "app_secret": "",
-    "receive_id": ""
-  },
-  "scraper": {
-    "request_delay": 5,
-    "max_records_per_type": 10
-  },
-  "schedule": {
-    "start_hour": 8,
-    "end_hour": 22,
-    "interval_hours": 2
-  }
-}
-EOF
-fi
+# 配置文件（直接使用项目中的配置）
+cp "${PROJECT_DIR}/config.json" "${PACKAGE_DIR}/config.json"
 
 # 创建必要目录
 mkdir -p "${PACKAGE_DIR}/data"
@@ -248,36 +218,9 @@ fi
 echo "[INFO] 检查配置文件..."
 if [ -f "$PROJECT_DIR/config.json" ]; then
     echo "[OK] 配置文件已存在"
-    echo "[INFO] 请确保 config.json 中的 API 密钥和 webhook 已正确配置"
 else
-    echo "[WARN] config.json 不存在，将创建默认配置"
-    cat > "$PROJECT_DIR/config.json" << 'CONFIGEOF'
-{
-  "ai": {
-    "api_url": "",
-    "api_key": "",
-    "model": "gpt-3.5-turbo",
-    "timeout": 60,
-    "max_records_per_request": 5
-  },
-  "feishu": {
-    "webhook_url": "",
-    "app_id": "",
-    "app_secret": "",
-    "receive_id": ""
-  },
-  "scraper": {
-    "request_delay": 5,
-    "max_records_per_type": 10
-  },
-  "schedule": {
-    "start_hour": 8,
-    "end_hour": 22,
-    "interval_hours": 2
-  }
-}
-CONFIGEOF
-    echo "[WARN] 请编辑 config.json 配置API和webhook后再启动"
+    echo "[ERROR] config.json 不存在"
+    exit 1
 fi
 
 echo

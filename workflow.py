@@ -13,10 +13,9 @@ from feishu_sender import FeishuSender
 from storage import BidStorage
 from config import (
     MONITOR_INFO_TYPES,
-    SCRAPER_CONFIG,
+    get_scraper_config,
+    get_ai_config,
 )
-
-REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
 
 # 配置日志
 logging.basicConfig(
@@ -48,7 +47,7 @@ class WorkflowRunner:
         logger.info("=" * 50)
 
         # 从配置获取每类最大抓取数
-        max_records = SCRAPER_CONFIG.get("max_records_per_type", 10)
+        max_records = get_scraper_config().get("max_records_per_type", 10)
 
         total_new = 0
         for info_type in MONITOR_INFO_TYPES:
@@ -89,7 +88,8 @@ class WorkflowRunner:
                 break
 
             # 批量抓取详情
-            details = self.detail_scraper.fetch_batch(records, delay=REQUEST_DELAY)
+            request_delay = get_scraper_config().get("request_delay", 5)
+            details = self.detail_scraper.fetch_batch(records, delay=request_delay)
 
             # 保存详情
             import json
@@ -124,9 +124,8 @@ class WorkflowRunner:
         logger.info("=" * 50)
 
         # 从配置获取批量大小
-        from config import AI_CONFIG
         if batch_size is None:
-            batch_size = AI_CONFIG.get("max_records_per_request", 10)
+            batch_size = get_ai_config().get("max_records_per_request", 10)
 
         total_success = 0
         while True:

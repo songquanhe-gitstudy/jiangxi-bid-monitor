@@ -2,17 +2,13 @@
 飞书消息发送模块 - 将提取的数据发送到飞书
 """
 
-"""
-飞书消息发送模块 - 将提取的数据发送到飞书
-"""
-
 import json
 import requests
 import logging
 from typing import Dict, List, Optional
 from datetime import datetime
 
-from config import FEISHU_CONFIG
+from config import get_feishu_config
 
 logger = logging.getLogger(__name__)
 
@@ -23,16 +19,21 @@ class FeishuSender:
     def __init__(self, storage=None):
         self.storage = storage
 
+    def _get_feishu_config(self) -> dict:
+        """动态获取飞书配置"""
+        return get_feishu_config()
+
     def _get_access_token(self) -> Optional[str]:
         """获取飞书access_token（使用API方式时需要）"""
 
-        if not FEISHU_CONFIG["app_id"] or not FEISHU_CONFIG["app_secret"]:
+        feishu_config = self._get_feishu_config()
+        if not feishu_config["app_id"] or not feishu_config["app_secret"]:
             return None
 
         url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal"
         data = {
-            "app_id": FEISHU_CONFIG["app_id"],
-            "app_secret": FEISHU_CONFIG["app_secret"],
+            "app_id": feishu_config["app_id"],
+            "app_secret": feishu_config["app_secret"],
         }
 
         try:
@@ -224,7 +225,7 @@ class FeishuSender:
     def send_via_webhook(self, content: str) -> bool:
         """通过webhook发送消息"""
 
-        webhook_url = FEISHU_CONFIG.get("webhook_url")
+        webhook_url = self._get_feishu_config().get("webhook_url")
         if not webhook_url:
             logger.warning("飞书webhook_url未配置")
             return False
@@ -281,7 +282,7 @@ class FeishuSender:
     def send_card_via_webhook(self, card_data: Dict) -> bool:
         """通过webhook发送卡片消息(interactive类型)"""
 
-        webhook_url = FEISHU_CONFIG.get("webhook_url")
+        webhook_url = self._get_feishu_config().get("webhook_url")
         if not webhook_url:
             logger.warning("飞书webhook_url未配置")
             return False
@@ -335,7 +336,7 @@ class FeishuSender:
             logger.warning("无法获取飞书access_token")
             return False
 
-        receive_id = FEISHU_CONFIG.get("receive_id")
+        receive_id = self._get_feishu_config().get("receive_id")
         if not receive_id:
             logger.warning("飞书receive_id未配置")
             return False
@@ -372,11 +373,11 @@ class FeishuSender:
         """发送消息（自动选择webhook或API）"""
 
         # 优先使用webhook
-        if FEISHU_CONFIG.get("webhook_url"):
+        if self._get_feishu_config().get("webhook_url"):
             return self.send_via_webhook(content)
 
         # 其次使用API
-        if FEISHU_CONFIG.get("app_id") and FEISHU_CONFIG.get("receive_id"):
+        if self._get_feishu_config().get("app_id") and self._get_feishu_config().get("receive_id"):
             return self.send_via_api(content)
 
         logger.warning("飞书未配置，请设置webhook_url或app_id+receive_id")
@@ -554,14 +555,20 @@ class FeishuSender:
 
 def configure_feishu(webhook_url: str = "", app_id: str = "",
                      app_secret: str = "", receive_id: str = ""):
-    """配置飞书"""
+    """配置飞书 - 更新config.json文件"""
 
-    FEISHU_CONFIG["webhook_url"] = webhook_url
-    FEISHU_CONFIG["app_id"] = app_id
-    FEISHU_CONFIG["app_secret"] = app_secret
-    FEISHU_CONFIG["receive_id"] = receive_id
+    import json
+    config = get_feishu_config()
+    if webhook_url:
+        config["webhook_url"] = webhook_url
+    if app_id:
+        config["app_id"] = app_id
+    if app_secret:
+        config["app_secret"] = app_secret
+    if receive_id:
+        config["receive_id"] = receive_id
 
-    logger.info("飞书配置完成")
+    logger.info("飞书配置完成（已更新config.json）")
 
 
 def test_feishu():

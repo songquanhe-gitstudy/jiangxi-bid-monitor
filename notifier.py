@@ -9,7 +9,7 @@ from datetime import datetime
 from typing import List, Dict, Optional
 import logging
 
-from config import FEISHU_CONFIG
+from config import get_feishu_config
 
 logger = logging.getLogger(__name__)
 
@@ -18,10 +18,11 @@ class FeishuNotifier:
     """飞书消息通知器"""
 
     def __init__(self):
-        self.webhook_url = FEISHU_CONFIG.get("webhook_url")
-        self.app_id = FEISHU_CONFIG.get("app_id")
-        self.app_secret = FEISHU_CONFIG.get("app_secret")
-        self.receive_id = FEISHU_CONFIG.get("receive_id")
+        feishu_config = get_feishu_config()
+        self.webhook_url = feishu_config.get("webhook_url")
+        self.app_id = feishu_config.get("app_id")
+        self.app_secret = feishu_config.get("app_secret")
+        self.receive_id = feishu_config.get("receive_id")
 
         # 检查配置
         self.use_webhook = bool(self.webhook_url)

@@ -13,13 +13,8 @@ import logging
 from config import (
     API_BASE_URL, API_ENDPOINT,
     INDUSTRY_TYPES, INFO_TYPES, MONITOR_INFO_TYPES,
-    SCRAPER_CONFIG,
+    get_scraper_config,
 )
-
-# 从配置获取参数
-MAX_RECORDS_PER_REQUEST = SCRAPER_CONFIG.get("max_records_per_type", 20)
-REQUEST_TIMEOUT = SCRAPER_CONFIG.get("request_timeout", 60)
-REQUEST_DELAY = SCRAPER_CONFIG.get("request_delay", 5)
 
 logger = logging.getLogger(__name__)
 
@@ -70,11 +65,16 @@ class JiangxiBidScraper:
         industry_code: str,
         info_type_code: Optional[str] = None,
         page_num: int = 0,
-        page_size: int = MAX_RECORDS_PER_REQUEST,
+        page_size: int = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None
     ) -> Dict:
         """构建API请求体"""
+
+        # 动态获取配置
+        if page_size is None:
+            page_size = get_scraper_config().get("max_records_per_type", 20)
+        request_timeout = get_scraper_config().get("request_timeout", 60)
 
         # 时间范围：默认查询最近3个月
         if not start_date:
@@ -148,6 +148,7 @@ class JiangxiBidScraper:
         """发送API请求"""
 
         url = f"{API_BASE_URL}{API_ENDPOINT}"
+        request_timeout = get_scraper_config().get("request_timeout", 60)
 
         try:
             # 尝试两种请求方式
@@ -155,7 +156,7 @@ class JiangxiBidScraper:
             response = self.session.post(
                 url,
                 json=request_body,
-                timeout=REQUEST_TIMEOUT
+                timeout=request_timeout
             )
 
             if response.status_code != 200:
@@ -163,7 +164,7 @@ class JiangxiBidScraper:
                 response = self.session.post(
                     url,
                     data={"param": json.dumps(request_body)},
-                    timeout=REQUEST_TIMEOUT
+                    timeout=request_timeout
                 )
 
             response.raise_for_status()
@@ -189,11 +190,15 @@ class JiangxiBidScraper:
         self,
         info_type_name: str,
         page_num: int = 0,
-        page_size: int = MAX_RECORDS_PER_REQUEST,
+        page_size: int = None,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None
     ) -> Dict:
         """按信息类型抓取数据"""
+
+        # 动态获取默认页大小
+        if page_size is None:
+            page_size = get_scraper_config().get("max_records_per_type", 20)
 
         industry_code = INDUSTRY_TYPES["房建及市政工程"]
         info_type_code = INFO_TYPES.get(info_type_name)
@@ -265,14 +270,16 @@ class JiangxiBidScraper:
                 if result["records"]:
                     records.extend(result["records"])
 
+                    # 动态获取页大小配置
+                    max_page_size = get_scraper_config().get("max_records_per_type", 20)
                     # 如果返回记录数小于请求的页大小，说明已经获取完毕
-                    if len(result["records"]) < MAX_RECORDS_PER_REQUEST:
+                    if len(result["records"]) < max_page_size:
                         break
                 else:
                     break
 
                 page_num += 1
-                time.sleep(REQUEST_DELAY)  # 避免请求过快
+                time.sleep(get_scraper_config().get("request_delay", 5))  # 避免请求过快
 
             all_records[info_type] = records
 

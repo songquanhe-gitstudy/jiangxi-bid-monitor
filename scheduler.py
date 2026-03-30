@@ -17,7 +17,7 @@ except ImportError:
     APSCHEDULER_AVAILABLE = False
     logging.warning("APScheduler未安装，定时功能不可用")
 
-from config import SCHEDULE_CONFIG
+from config import get_schedule_config
 from workflow import WorkflowRunner
 
 logger = logging.getLogger(__name__)
@@ -55,9 +55,9 @@ class BidMonitorScheduler:
             logger.error("APScheduler未安装，无法设置定时任务")
             return False
 
-        start_hour = SCHEDULE_CONFIG["start_hour"]
-        end_hour = SCHEDULE_CONFIG["end_hour"]
-        interval_hours = SCHEDULE_CONFIG.get("interval_hours", 1)
+        start_hour = get_schedule_config()["start_hour"]
+        end_hour = get_schedule_config()["end_hour"]
+        interval_hours = get_schedule_config().get("interval_hours", 1)
 
         # 每天start_hour点执行首次完整流程（包含列表抓取）
         trigger_full = CronTrigger(hour=start_hour, minute=0)
@@ -109,7 +109,7 @@ class BidMonitorScheduler:
 
             # 从配置读取是否执行启动任务
             if run_startup_task is None:
-                run_startup_task = SCHEDULE_CONFIG.get("startup_task", True)
+                run_startup_task = get_schedule_config().get("startup_task", True)
 
             # 服务重启时执行一次完整流程任务（包含列表抓取）
             if run_startup_task:
@@ -138,7 +138,7 @@ class BidMonitorScheduler:
 
         # 从配置读取是否执行启动任务
         if run_startup_task is None:
-            run_startup_task = SCHEDULE_CONFIG.get("startup_task", True)
+            run_startup_task = get_schedule_config().get("startup_task", True)
 
         # 服务启动时执行一次完整流程任务（包含列表抓取）
         if run_startup_task:
@@ -150,26 +150,26 @@ class BidMonitorScheduler:
             current_hour = now.hour
 
             # 检查是否在工作时间范围内
-            if current_hour < SCHEDULE_CONFIG["start_hour"]:
+            if current_hour < get_schedule_config()["start_hour"]:
                 # 早于8点，等待
-                wait_seconds = (SCHEDULE_CONFIG["start_hour"] - current_hour) * 3600 - now.minute * 60
-                logger.info(f"等待到早上{SCHEDULE_CONFIG['start_hour']}点，还需等待{wait_seconds}秒")
+                wait_seconds = (get_schedule_config()["start_hour"] - current_hour) * 3600 - now.minute * 60
+                logger.info(f"等待到早上{get_schedule_config()['start_hour']}点，还需等待{wait_seconds}秒")
                 time.sleep(wait_seconds)
                 continue
 
-            if current_hour > SCHEDULE_CONFIG["end_hour"]:
+            if current_hour > get_schedule_config()["end_hour"]:
                 # 晚于23点，等待到次日早上
-                wait_seconds = (24 - current_hour + SCHEDULE_CONFIG["start_hour"]) * 3600
-                logger.info(f"今日任务结束，等待到次日早上{SCHEDULE_CONFIG['start_hour']}点")
+                wait_seconds = (24 - current_hour + get_schedule_config()["start_hour"]) * 3600
+                logger.info(f"今日任务结束，等待到次日早上{get_schedule_config()['start_hour']}点")
                 time.sleep(wait_seconds)
                 continue
 
             # 执行流程
-            skip_scrape = (current_hour > SCHEDULE_CONFIG["start_hour"])
+            skip_scrape = (current_hour > get_schedule_config()["start_hour"])
             self.run_full_workflow(skip_scrape=skip_scrape)
 
             # 等待下一次
-            time.sleep(SCHEDULE_CONFIG["interval_hours"] * 3600)
+            time.sleep(get_schedule_config()["interval_hours"] * 3600)
 
 
 def run_scheduler(run_startup_task: bool = True):
@@ -234,10 +234,10 @@ if __name__ == "__main__":
         run_scheduler(run_startup_task=None)  # 从配置读取是否执行启动任务
     else:
         parser.print_help()
-        interval = SCHEDULE_CONFIG.get("interval_hours", 1)
-        startup_task = SCHEDULE_CONFIG.get("startup_task", True)
+        interval = get_schedule_config().get("interval_hours", 1)
+        startup_task = get_schedule_config().get("startup_task", True)
         print(f"\n使用说明:")
-        print(f"  --daemon   作为后台守护进程运行（{SCHEDULE_CONFIG['start_hour']:02d}:00-{SCHEDULE_CONFIG['end_hour']:02d}:00 每{interval}小时执行）")
+        print(f"  --daemon   作为后台守护进程运行（{get_schedule_config()['start_hour']:02d}:00-{get_schedule_config()['end_hour']:02d}:00 每{interval}小时执行）")
         print("  --once     单次执行完整监控流程")
         print("  --test     测试模式，显示任务配置")
         print(f"\n提示: 守护进程启动时会{'执行' if startup_task else '不执行'}一次完整流程任务（可在config.json中配置startup_task）")
