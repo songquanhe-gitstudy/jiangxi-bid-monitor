@@ -98,9 +98,9 @@ class JiangxiBidScraper:
     ) -> Dict:
         """构建API请求体"""
 
-        # 动态获取配置
+        # 动态获取配置 - 每次请求固定10条
         if page_size is None:
-            page_size = get_scraper_config().get("max_records_per_type", 20)
+            page_size = get_scraper_config().get("page_size", 10)
 
         # 时间范围：默认查询最近3个月
         if not start_date:
@@ -108,33 +108,18 @@ class JiangxiBidScraper:
         if not end_date:
             end_date = datetime.now().strftime("%Y-%m-%d 23:59:59")
 
-        # 构建条件
-        # 如果指定了信息类型，直接用精确匹配（信息类型编码已包含行业类型）
-        # 如果没指定信息类型，才用行业类型的模糊匹配
-        if info_type_code:
-            conditions = [
-                {
-                    "fieldName": "categorynum",
-                    "equal": info_type_code,
-                    "notEqual": None,
-                    "equalList": None,
-                    "notEqualList": None,
-                    "isLike": False,
-                    "likeType": 0
-                }
-            ]
-        else:
-            conditions = [
-                {
-                    "fieldName": "categorynum",
-                    "equal": industry_code,
-                    "notEqual": None,
-                    "equalList": None,
-                    "notEqualList": None,
-                    "isLike": True,
-                    "likeType": 2
-                }
-            ]
+        # 构建条件 - 与网页请求保持一致，始终使用模糊匹配
+        conditions = [
+            {
+                "fieldName": "categorynum",
+                "equal": info_type_code if info_type_code else industry_code,
+                "notEqual": None,
+                "equalList": None,
+                "notEqualList": None,
+                "isLike": True,
+                "likeType": 2
+            }
+        ]
 
         request_body = {
             "token": "",
@@ -222,9 +207,9 @@ class JiangxiBidScraper:
     ) -> Dict:
         """按信息类型抓取数据"""
 
-        # 动态获取默认页大小
+        # 动态获取页大小配置（每次请求固定10条）
         if page_size is None:
-            page_size = get_scraper_config().get("max_records_per_type", 20)
+            page_size = get_scraper_config().get("page_size", 10)
 
         industry_code = INDUSTRY_TYPES["房建及市政工程"]
         info_type_code = INFO_TYPES.get(info_type_name)
@@ -275,9 +260,16 @@ class JiangxiBidScraper:
         self,
         start_date: Optional[str] = None,
         end_date: Optional[str] = None,
-        max_pages_per_type: int = 5  # 每种类型最多抓取几页
+        max_pages_per_type: int = None  # 每种类型最多抓取几页，从配置读取
     ) -> Dict[str, List[Dict]]:
         """抓取所有监控的信息类型"""
+
+        # 从配置获取页数（2页 = 20条数据）
+        if max_pages_per_type is None:
+            max_pages_per_type = get_scraper_config().get("max_pages_per_type", 2)
+
+        # 每次请求的条数
+        page_size = get_scraper_config().get("page_size", 10)
 
         all_records = {}
 
@@ -289,6 +281,7 @@ class JiangxiBidScraper:
                 result = self.fetch_by_info_type(
                     info_type_name=info_type,
                     page_num=page_num,
+                    page_size=page_size,
                     start_date=start_date,
                     end_date=end_date
                 )
@@ -296,10 +289,8 @@ class JiangxiBidScraper:
                 if result["records"]:
                     records.extend(result["records"])
 
-                    # 动态获取页大小配置
-                    max_page_size = get_scraper_config().get("max_records_per_type", 20)
                     # 如果返回记录数小于请求的页大小，说明已经获取完毕
-                    if len(result["records"]) < max_page_size:
+                    if len(result["records"]) < page_size:
                         break
                 else:
                     break

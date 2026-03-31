@@ -46,14 +46,27 @@ class WorkflowRunner:
         logger.info("【步骤1】抓取招标信息列表 - 开始")
         logger.info("=" * 50)
 
-        # 从配置获取每类最大抓取数
-        max_records = get_scraper_config().get("max_records_per_type", 10)
+        # 从配置获取页数和每页条数
+        max_pages = get_scraper_config().get("max_pages_per_type", 2)
+        page_size = get_scraper_config().get("page_size", 10)
+        total_records = max_pages * page_size
 
         total_new = 0
         for info_type in MONITOR_INFO_TYPES:
-            logger.info(f"抓取类型: {info_type} (最多 {max_records} 条)")
-            result = self.scraper.fetch_by_info_type(info_type, page_num=0, page_size=max_records)
-            records = result.get("records", [])
+            logger.info(f"抓取类型: {info_type} (最多 {max_pages} 页, 每页 {page_size} 条, 共 {total_records} 条)")
+
+            # 支持分页抓取
+            records = []
+            for page_num in range(max_pages):
+                result = self.scraper.fetch_by_info_type(info_type, page_num=page_num, page_size=page_size)
+                if result.get("records"):
+                    records.extend(result["records"])
+                    # 如果返回记录数小于页大小，说明已获取完毕
+                    if len(result["records"]) < page_size:
+                        break
+                else:
+                    break
+
             if records:
                 new_count = self.storage.save_records(records)
                 total_new += new_count
