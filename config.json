@@ -3,7 +3,7 @@
         "api_url": "https://coding.dashscope.aliyuncs.com/v1/chat/completions",
         "api_key": "sk-sp-03a867f1b0634b6b9722c35de90ef1e6",
         "model": "qwen3.5-plus",
-        "timeout": 300,
+        "timeout": 600,
         "max_records_per_request": 10
     },
     "feishu": {

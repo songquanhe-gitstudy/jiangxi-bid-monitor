@@ -2,13 +2,40 @@
 详情页面抓取模块 - 抓取原始HTML内容
 """
 
+# 首先配置OpenSSL支持legacy renegotiation（必须在导入requests之前）
+import os
+import ssl
+import tempfile
+
+def setup_openssl_legacy():
+    """配置OpenSSL支持legacy renegotiation"""
+    conf_content = """openssl_conf = openssl_init
+
+[openssl_init]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+CipherString = DEFAULT:@SECLEVEL=1
+Options = UnsafeLegacyRenegotiation
+"""
+    conf_file = tempfile.NamedTemporaryFile(mode='w', suffix='.conf', delete=False)
+    conf_file.write(conf_content)
+    conf_file.close()
+    os.environ['OPENSSL_CONF'] = conf_file.name
+
+setup_openssl_legacy()
+
+# 然后才导入其他模块
 import requests
 import json
 import re
 import time
+import logging
 from typing import Dict, Optional
 from datetime import datetime
-import logging
 
 from config import get_scraper_config
 
