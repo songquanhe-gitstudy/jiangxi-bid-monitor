@@ -322,10 +322,11 @@ function getExtractedFields(info_type, extracted_data) {
         ];
         fieldsHtml = renderFields(extracted_data, fields);
     } else if (info_type === '招标公告') {
-        // 招标公告：招标人，工程类别，项目总投资，资质要求
+        // 招标公告：招标人，工程类别，本工程投资，项目总投资，资质要求
         const fields = [
             { label: '招标人', key: '招标人' },
             { label: '工程类别', key: '工程类别' },
+            { label: '本工程投资', key: '本工程投资' },
             { label: '项目总投资', key: '项目总投资' },
             { label: '资质要求', key: '资质要求', truncate: 30 }
         ];
